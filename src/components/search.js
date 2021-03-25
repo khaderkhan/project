@@ -7,10 +7,22 @@ import { Table, Tag, Space } from 'antd';
 
 const columns = [
     {
+        title: 'Poster',
+        dataIndex: 'backdrop_path',
+        key: 'backdrop_path',
+        render: (text, record) => {
+           const itemUrl = `https://image.tmdb.org/t/p/w92${record.poster_path}`
+           console.log(itemUrl)
+           return ( <img src={itemUrl}/>);
+        }
+    },
+    {
       title: 'Title',
       dataIndex: 'title',
       key: 'title',
-      render: text => <a>{text}</a>,
+      render: (text ,record)=> {
+        return <Link to={`/movies/${record.id}`}>{text}</Link>
+      } 
     },
     {
       title: 'Rating',
@@ -21,45 +33,9 @@ const columns = [
       title: 'Release Date',
       dataIndex: 'release_date',
       key: 'release_date',
-    },
-    {
-        title: 'Poster',
-        dataIndex: 'backdrop_path',
-        key: 'backdrop_path',
-        render: (text, record) => {
-           const itemUrl = `https://image.tmdb.org/t/p/w92${record.poster_path}`
-           console.log(itemUrl)
-           return ( <img src={record.itemUrl}/>);
-        }
-    }
-   
+    }   
   ];
   
-//   const data = [
-//     {
-//       key: '1',
-//       name: 'John Brown',
-//       age: 32,
-//       address: 'New York No. 1 Lake Park',
-//       tags: ['nice', 'developer'],
-//     },
-//     {
-//       key: '2',
-//       name: 'Jim Green',
-//       age: 42,
-//       address: 'London No. 1 Lake Park',
-//       tags: ['loser'],
-//     },
-//     {
-//       key: '3',
-//       name: 'Joe Black',
-//       age: 32,
-//       address: 'Sidney No. 1 Lake Park',
-//       tags: ['cool', 'teacher'],
-//     },
-//   ];
-
-
 
 const Search = () => {
     const {title} = useParams()
@@ -71,7 +47,6 @@ const Search = () => {
         if(title) {
             movieService.findMovieByTitle(title)
                 .then(results => {
-                    console.log("results===>>", results)
                     setResults(results.results)
                 })  
         }
@@ -91,18 +66,6 @@ const Search = () => {
                 Search
             </button>
             <Table columns={columns} dataSource={results} />
-            {/* <ul className="list-group">
-                {
-                    results && 
-                    results.map(movie =>
-                        <li className="list-group-item" key={movie.id}>
-                            <Link to={`/details/${movie.id}`}>
-                            {movie.original_title}
-                            </Link>
-                        </li>
-                    )
-                }
-            </ul> */}
         </div>
     )
 }
