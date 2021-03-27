@@ -5,11 +5,15 @@ const Header = () => {
     return (
         <>
             <Navbar expand="lg" bg="dark" variant="dark">
-                <Navbar.Brand href="#home" className="pl-2 pt-2 h1">The MovieBook</Navbar.Brand>
+                <Navbar.Brand href="#home" className="pl-2 pt-2 h1">
+                    movie-reviewer-app
+                </Navbar.Brand>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="mr-auto">
-                        <Nav.Link href="/search">Search</Nav.Link>
+                        <Nav.Link href="/search">
+                            Search
+                        </Nav.Link>
                     </Nav>
                     <Form inline>
                         <Link to="/login">
