@@ -21,7 +21,7 @@ const Details = () => {
                     <div className="movie-title">
                         {movie.original_title}
                     </div>
-                    <div>
+                    <div className="movie-features">
                         Popularity: {movie.popularity}
                     </div>
                     <div className="movie-features">
