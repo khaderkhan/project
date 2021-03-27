@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react'
 import {useParams} from 'react-router-dom'
 import movieService from '../services/movies-service'
 import '../style/MovieDetails.style.css';
+
 const Details = () => {
     const [movie, setMovie] = useState({})
     const {movieID} = useParams()
@@ -9,8 +10,8 @@ const Details = () => {
         console.log("movieID is:", movieID)
         movieService.findMovieById(movieID)
             .then(movie => setMovie(movie))
-    },[movieID])
-    return(
+    }, [movieID])
+    return (
         <div className="container-fluid">
             <div className="row mt-5">
                 <div className="col-lg-3 col-md-4 col-sm-6 ml-5 img-content">
@@ -77,7 +78,6 @@ const Details = () => {
                         </div>
                     </div>
                 </div>
-                {JSON.stringify(movie)}
             </div>
 
 
