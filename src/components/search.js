@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react'
 import movieService from '../services/movies-service'
 import {Link, useParams, useHistory} from "react-router-dom";
 import { Table, Tag, Space } from 'antd';
+import {Button, Form, FormControl, Nav, Navbar} from "react-bootstrap";
 
 
 
@@ -12,7 +13,7 @@ const columns = [
         key: 'backdrop_path',
         render: (text, record) => {
            const itemUrl = `https://image.tmdb.org/t/p/w92${record.poster_path}`
-           console.log(itemUrl)
+           // console.log(itemUrl)
            return ( <img src={itemUrl}/>);
         }
     },
@@ -21,7 +22,8 @@ const columns = [
       dataIndex: 'title',
       key: 'title',
       render: (text ,record)=> {
-        return <Link to={`/movies/${record.id}`}>{text}</Link>
+        const movieID = record.id;
+        return <Link to={`/movies/${movieID}`}>{text}</Link>
       } 
     },
     {
@@ -52,21 +54,46 @@ const Search = () => {
         }
     }, [title])
     return(
-        <div>
-            <h1>Search</h1>
-            <input
-                onChange={(event) => {
-                    setSearchTitle(event.target.value)
-                }}
-                className="form-control"
-                value={searchTitle}/>
-            <button
-                onClick={() => {history.push(`/search/${searchTitle}`)}}
-                className="btn btn-primary btn-block">
-                Search
-            </button>
-            <Table columns={columns} dataSource={results} />
-        </div>
+        <>
+            <br />
+            <Navbar bg="dark" variant="dark">
+                <Navbar.Brand href="/">Home</Navbar.Brand>
+                <Nav className="mr-auto">
+
+                    <Nav.Link href="#feature">Feature 1</Nav.Link>
+                    <Nav.Link href="#pricing">Feature 2</Nav.Link>
+                </Nav>
+                <Form inline>
+                    <FormControl type="text"
+                                 placeholder="Search a movie"
+                                 className="mr-sm-2"
+                                 onChange={(event) => {
+                                     setSearchTitle(event.target.value)
+                                 }}
+                                 onKeyPress = {event => {if (event.key === "Enter")
+                                      {history.push(`/search/${searchTitle}`)}}}/>
+                    <Button variant="outline-primary"
+                            onClick={() => {history.push(`/search/${searchTitle}`)}}>
+                        Search
+                    </Button>
+                </Form>
+            </Navbar>
+            <div>
+
+                {/*<input*/}
+                {/*    onChange={(event) => {*/}
+                {/*        setSearchTitle(event.target.value)*/}
+                {/*    }}*/}
+                {/*    className="form-control"*/}
+                {/*    value={searchTitle}/>*/}
+                {/*<button*/}
+                {/*    onClick={() => {history.push(`/search/${searchTitle}`)}}*/}
+                {/*    className="btn btn-primary btn-block">*/}
+                {/*    Search*/}
+                {/*</button>*/}
+                <Table columns={columns} dataSource={results} />
+            </div>
+        </>
     )
 }
 

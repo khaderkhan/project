@@ -3,7 +3,7 @@ export const findMovieByTitle = (title) =>
         .then(response => response.json())
 
 export const findMovieById = (imdbID) =>
-    fetch(`http://www.omdbapi.com/?i=${imdbID}&apikey=4a249f8d`)
+    fetch(`https://api.themoviedb.org/3/movie/${imdbID}?api_key=eea1a7fc0d5c72b36736e248dc5e2693&language=en-US`)
         .then(response => response.json())
 
 export default {

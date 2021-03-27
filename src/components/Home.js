@@ -9,6 +9,7 @@ const Home = () => {
                 Search
             </Link>
         </div>
+
     )
 }
 
