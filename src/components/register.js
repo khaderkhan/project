@@ -1,6 +1,7 @@
 const Register = () => {
     return(
-        <div>
+        <div className="Login">
+            <form>
             <h1>Sign Up</h1>
             <div className="mb-3 row">
                 <label htmlFor="username"
@@ -77,7 +78,7 @@ const Register = () => {
                 </div>
             </div>
 
-
+            </form>
         </div>
     )
 }

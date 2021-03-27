@@ -38,7 +38,7 @@ const Details = () => {
                                 </div>
                                 {/*<div className='row'>*/}
                                 {/*    {*/}
-                                {/*        movie.genres.map((genre, index) => {*/}
+                                {/*        movie && movie.genres.map((genre, index) => {*/}
                                 {/*        return (*/}
                                 {/*            <div key={index} className='col-3 ml-2 btn genre-button'>*/}
                                 {/*                {genre.name}*/}
@@ -77,6 +77,7 @@ const Details = () => {
                         </div>
                     </div>
                 </div>
+                {JSON.stringify(movie)}
             </div>
 
 
