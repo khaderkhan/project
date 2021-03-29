@@ -6,7 +6,7 @@ const Header = () => {
         <>
             <Navbar expand="lg" bg="dark" variant="dark">
                 <Navbar.Brand href="#home" className="pl-2 pt-2 h1">
-                    movie-reviewer-app
+                    Movie Reviewer App
                 </Navbar.Brand>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">

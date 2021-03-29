@@ -5,17 +5,25 @@ import '../style/MovieDetails.style.css';
 
 const Details = () => {
     const [movie, setMovie] = useState({})
+    const [actors, setActors] = useState([])
     const {movieID} = useParams()
     useEffect(() => {
-        console.log("movieID is:", movieID)
         movieService.findMovieById(movieID)
             .then(movie => setMovie(movie))
+
     }, [movieID])
+
+    useEffect(() => {
+        movieService.findActorsByMovieId(movieID)
+            .then(actors =>  setActors(actors))
+    }, [movieID])
+
+
     return (
         <div className="container-fluid">
             <div className="row mt-5">
                 <div className="col-lg-3 col-md-4 col-sm-6 ml-5 img-content">
-                    <img src={`https://image.tmdb.org/t/p/w92/${movie.poster_path}`}/>
+                    <img src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`}/>
                 </div>
 
                 <div className="col-lg-8 col-md-7 col-sm-5 ml-2 col-md-offset-2">
@@ -37,17 +45,17 @@ const Details = () => {
                                 <div className="movie-features">
                                     Genres
                                 </div>
-                                {/*<div className='row'>*/}
-                                {/*    {*/}
-                                {/*        movie && movie.genres.map((genre, index) => {*/}
-                                {/*        return (*/}
-                                {/*            <div key={index} className='col-3 ml-2 btn genre-button'>*/}
-                                {/*                {genre.name}*/}
-                                {/*            </div>*/}
-                                {/*        );*/}
-                                {/*    })*/}
-                                {/*    }*/}
-                                {/*</div>*/}
+                                <div className='row'>
+                                    {
+                                        movie.genres && movie.genres.map((genre, index) => {
+                                        return (
+                                            <div key={index} className='col-3 ml-2 btn genre-button'>
+                                                {genre.name}
+                                            </div>
+                                        );
+                                    })
+                                    }
+                                </div>
                             </div>
                             <div className="col-6">
                                 <div className="movie-features">
@@ -76,10 +84,24 @@ const Details = () => {
                                 </div>
                             </div>
                         </div>
+
+
+
                     </div>
                 </div>
             </div>
-
+            {/*<div className='row'>*/}
+            {/*    {*/}
+            {/*        actors && actors.map((actor, index) => {*/}
+            {/*            return (*/}
+            {/*                <div key={actor.id} className="col-3">*/}
+            {/*                    {actor.original_name}*/}
+            {/*                </div>*/}
+            {/*            );*/}
+            {/*        })*/}
+            {/*    }*/}
+            {/*</div>*/}
+            {/*{JSON.stringify(actors)}*/}
 
         </div>
     )
