@@ -1,7 +1,19 @@
 import {Navbar, Nav, FormControl, Form, Button, NavDropdown, Container} from 'react-bootstrap'
 import {Link} from "react-router-dom";
 import React from "react";
+import { GoogleLogin } from 'react-google-login';
+
+
 const Header = () => {
+
+    const responseGoogleSuccess = (response) => {
+        console.log(response);
+      }
+    
+    const responseGoogleFailure = (response) => {
+        console.log(response);
+    }
+
     return (
         <>
             <Navbar expand="lg" bg="dark" variant="dark">
@@ -30,7 +42,14 @@ const Header = () => {
                     </Form>
                 </Navbar.Collapse>
             </Navbar>
-
+            Hello world
+            <GoogleLogin
+    clientId="1039352677511-g79k2dj640dlsr9dehkgaa1j7ujmi4hi.apps.googleusercontent.com"
+    buttonText="Login"
+    onSuccess={responseGoogleSuccess}
+    onFailure={responseGoogleFailure}
+    cookiePolicy={'single_host_origin'}
+  />
 
         </>
 
