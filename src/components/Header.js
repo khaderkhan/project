@@ -8,10 +8,12 @@ const Header = () => {
 
     const responseGoogleSuccess = (response) => {
         console.log(response);
+        // to do: Insert the user into the users table in database. 
       }
     
     const responseGoogleFailure = (response) => {
         console.log(response);
+        // To do: nothing. 
     }
 
     return (
@@ -42,7 +44,6 @@ const Header = () => {
                     </Form>
                 </Navbar.Collapse>
             </Navbar>
-            Hello world
             <GoogleLogin
     clientId="1039352677511-g79k2dj640dlsr9dehkgaa1j7ujmi4hi.apps.googleusercontent.com"
     buttonText="Login"
