@@ -1,6 +1,6 @@
 import {Link} from "react-router-dom";
 
-const Profile = () => {
+const StaticProfile = () => {
     return(
         <div class="container">
             <h1>Profile</h1>
@@ -61,4 +61,4 @@ const Profile = () => {
     )
 }
 
-export default Profile;
+export default StaticProfile;
