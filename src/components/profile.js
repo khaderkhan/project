@@ -61,7 +61,7 @@ const Profile = () => {
                         </div>
                         <div class="col-4">
                             <h2>Your Last Review</h2>
-                            <p>Last review here</p>
+                            <p><i>Last review here</i></p>
                         </div>
                     </div>
         </div>
