@@ -49,12 +49,19 @@ const Profile = () => {
                 <div class="row">
                         <div class="col-4">
                             <h2>Following</h2>
+                            <ul>
+                                <li> Link to user you are following </li>
+                            </ul>
                         </div>
                         <div class="col-4">
                             <h2>Followers</h2>
+                            <ul>
+                                <li> Link to user who is a follower </li>
+                            </ul>
                         </div>
                         <div class="col-4">
-                            <h2>Your Last Reviews</h2>
+                            <h2>Your Last Review</h2>
+                            <p>Last review here</p>
                         </div>
                     </div>
         </div>

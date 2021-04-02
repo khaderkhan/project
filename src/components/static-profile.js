@@ -21,7 +21,7 @@ const StaticProfile = () => {
                             <h2>Followers</h2>
                         </div>
                         <div class="col-4">
-                            <h2>Last Reviews</h2>
+                            <h2>Last Review</h2>
                         </div>
                 </div>
         </div>
