@@ -30,15 +30,10 @@ const Header = () => {
                         </Nav.Link>
                     </Nav>
                     <Form inline>
-                        <Link to="/login">
+                        <Link to="/profile">
                         <Button className="mr-2"
                                 variant="outline-primary">
-                            Log In
-                        </Button>
-                        </Link>
-                        <Link to="/register">
-                        <Button variant="outline-primary">
-                            Register
+                            Profile
                         </Button>
                         </Link>
                     </Form>

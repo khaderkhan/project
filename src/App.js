@@ -5,6 +5,7 @@ import Home from "./components/Home";
 import Header from "./components/Header";
 import Login from "./components/login";
 import Register from "./components/register";
+import Profile from "./components/profile";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
@@ -34,13 +35,8 @@ function App() {
             </Route>
             <Route
                 exact={true}
-                path={["/login"]}>
-                <Login/>
-            </Route>
-            <Route
-                exact={true}
-                path={["/register"]}>
-                <Register/>
+                path={["/profile"]}>
+                <Profile/>
             </Route>
 
         </BrowserRouter>
