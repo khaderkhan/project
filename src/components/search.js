@@ -23,7 +23,7 @@ const columns = [
       key: 'title',
       render: (text ,record)=> {
         const movieID = record.id;
-        return <Link to={`/movies/${movieID}`}>{text}</Link>
+        return <Link to={`/details/${movieID}`}>{text}</Link>
       } 
     },
     {

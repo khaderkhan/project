@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/wbdv-sp21-01-the-movie-book-react.iml" filepath="$PROJECT_DIR$/.idea/wbdv-sp21-01-the-movie-book-react.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/wbdv-sp21-01-movie-reviewer-app-react.iml" filepath="$PROJECT_DIR$/.idea/wbdv-sp21-01-movie-reviewer-app-react.iml" />
     </modules>
   </component>
 </project>

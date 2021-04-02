@@ -29,7 +29,7 @@ function App() {
             </Route>
             <Route
                 exact={true}
-                path={["/movies/:movieID"]}>
+                path={["/details/:movieID"]}>
                 <Details/>
             </Route>
             <Route
