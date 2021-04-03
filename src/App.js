@@ -5,6 +5,8 @@ import Home from "./components/Home";
 import Header from "./components/Header";
 import Login from "./components/login";
 import Register from "./components/register";
+import Profile from "./components/profile";
+import StaticProfile from "./components/static-profile";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
@@ -34,13 +36,13 @@ function App() {
             </Route>
             <Route
                 exact={true}
-                path={["/login"]}>
-                <Login/>
+                path={["/profile"]}>
+                <Profile/>
             </Route>
             <Route
                 exact={true}
-                path={["/register"]}>
-                <Register/>
+                path={["/profile/:profileId"]}>
+                <StaticProfile/>
             </Route>
 
         </BrowserRouter>

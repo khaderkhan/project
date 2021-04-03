@@ -8,13 +8,13 @@ import '../style/MovieDetails.style.css';
 const Details = () => {
     const [movie, setMovie] = useState({})
     const [actors, setActors] = useState([])
-    const {movieID} = useParams()
+    const {movieID}  = useParams()
+
     useEffect(() => {
         movieService.findMovieById(movieID)
             .then(movie => setMovie(movie))
         movieService.findActorsByMovieId(movieID)
             .then(actors =>  setActors(actors))
-
     }, [movieID])
 
 
