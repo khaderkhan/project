@@ -9,6 +9,8 @@ const Details = () => {
     const [movie, setMovie] = useState({})
     const [actors, setActors] = useState([])
     const {movieID} = useParams()
+    // const movieID = useParams().movieID
+    console.log("moveiId", movieID)
     useEffect(() => {
         movieService.findMovieById(movieID)
             .then(movie => setMovie(movie))
@@ -17,6 +19,7 @@ const Details = () => {
 
     }, [movieID])
 
+    
 
 
     return (
@@ -111,7 +114,8 @@ const Details = () => {
                     })
                 }
             </div>
-            {/*{JSON.stringify(actors)}*/}
+
+            {/* {JSON.stringify(movie)} */}
         </div>
     )
 }
