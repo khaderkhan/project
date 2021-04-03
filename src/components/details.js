@@ -3,6 +3,8 @@ import {useParams} from 'react-router-dom'
 import movieService from '../services/movies-service'
 import '../style/MovieDetails.style.css';
 
+
+
 const Details = () => {
     const [movie, setMovie] = useState({})
     const [actors, setActors] = useState([])
@@ -10,13 +12,11 @@ const Details = () => {
     useEffect(() => {
         movieService.findMovieById(movieID)
             .then(movie => setMovie(movie))
-
-    }, [movieID])
-
-    useEffect(() => {
         movieService.findActorsByMovieId(movieID)
             .then(actors =>  setActors(actors))
+
     }, [movieID])
+
 
 
     return (
@@ -90,19 +90,28 @@ const Details = () => {
                     </div>
                 </div>
             </div>
-            {/*<div className='row'>*/}
-            {/*    {*/}
-            {/*        actors && actors.map((actor, index) => {*/}
-            {/*            return (*/}
-            {/*                <div key={actor.id} className="col-3">*/}
-            {/*                    {actor.original_name}*/}
-            {/*                </div>*/}
-            {/*            );*/}
-            {/*        })*/}
-            {/*    }*/}
-            {/*</div>*/}
+            <div className="movie-features col-lg-3 col-md-4 col-sm-6 ml-5">
+                Cast
+            </div>
+            <div className='row'>
+                {
+                    // eslint-disable-next-line array-callback-return
+                    actors.cast && actors.cast.map((actor) => {
+                        if (actor.original_name && actor.profile_path)
+                        return (
+                            <div>
+                                <div className="col-lg-3 col-md-4 col-sm-6 ml-5 img-content">
+                                    <img src={`https://image.tmdb.org/t/p/original/${actor.profile_path}`}/>
+                                </div>
+                                <div key={actor.id} className="col-lg-3 col-md-4 col-sm-6 ml-5">
+                                    {actor.original_name}
+                                </div>
+                            </div>
+                        );
+                    })
+                }
+            </div>
             {/*{JSON.stringify(actors)}*/}
-
         </div>
     )
 }
