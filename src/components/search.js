@@ -3,6 +3,8 @@ import movieService from '../services/movies-service'
 import {Link, useParams, useHistory} from "react-router-dom";
 import { Table, Tag, Space } from 'antd';
 import {Button, Form, FormControl, Nav, Navbar} from "react-bootstrap";
+import { bake_cookie, read_cookie, delete_cookie } from 'sfcookies';
+
 
 
 
@@ -46,6 +48,12 @@ const Search = () => {
     const history = useHistory()
     useEffect(() => {
         setSearchTitle(title)
+        const cookie_key = 'loginCookie';
+        const cookieVal = read_cookie(cookie_key)
+        // If the user is logged in, fetch the type of user. 
+        // If the user type is admin => show all columns. 
+        // Otherwise, hide certain columns. 
+        console.log("my cookieVal===>>", cookieVal)
         if(title) {
             movieService.findMovieByTitle(title)
                 .then(results => {
