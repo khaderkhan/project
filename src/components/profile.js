@@ -16,16 +16,6 @@ const Profile = () => {
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="phone" class="col-sm-2 col-form-label">
-                            Phone </label>
-                        <div class="col-sm-6">
-                            <input class="form-control wbdv-field wbdv-phone"
-                                   type="tel"
-                                   id="phone"
-                                   value="(555) 123-4324"/>
-                        </div>
-                    </div>
-                    <div class="form-group row">
                         <label for="email" class="col-sm-2 col-form-label">
                             Email </label>
                         <div class="col-sm-6">
@@ -47,18 +37,6 @@ const Profile = () => {
                 </form>
                 <br/>
                 <div class="row">
-                        <div class="col-4">
-                            <h2>Following</h2>
-                            <ul>
-                                <li> Link to user you are following </li>
-                            </ul>
-                        </div>
-                        <div class="col-4">
-                            <h2>Followers</h2>
-                            <ul>
-                                <li> Link to user who is a follower </li>
-                            </ul>
-                        </div>
                         <div class="col-4">
                             <h2>Your Last Review</h2>
                             <p><i>Last review here</i></p>
