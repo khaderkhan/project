@@ -3,6 +3,7 @@ import {Link} from "react-router-dom";
 import React from "react";
 import { GoogleLogin } from 'react-google-login';
 import { bake_cookie, read_cookie, delete_cookie } from 'sfcookies';
+import userService from '../services/user-service'
 
 
 
@@ -10,7 +11,20 @@ const Header = () => {
 
     const cookie_key = 'loginCookie';
     const responseGoogleSuccess = (response) => {
-        console.log(response);
+
+        console.log("response google login", response);
+        console.log("response type", response.type)
+        const firstName = response.profileObj.givenName
+        const lastName = response.profileObj.familyName
+        const email = response.profileObj.email
+        const newUser = {
+            firstName,
+            lastName,
+            email,
+            userName: email,
+        }
+        userService.createUser(newUser)
+
         // Note: Since we're using Google login and not relying on the traditional logging system, we will not have the admin access in the normal way. 
         // So, for the regular user, we will have another column called type in the database. 
         // And, in the profile page, we will provide another button. => If the user requests admin access, then we can grant him the admin privileges.
