@@ -8,7 +8,7 @@ const Profile = () => {
                     <div class="form-group row">
                         <label for="username" class="col-sm-2 col-form-label">
                             Username </label>
-                        <div class="col-sm-6">
+                        <div class="col-sm-4">
                             <input class="form-control wbdv-field wbdv-username"
                                    id="username"
                                    readonly
@@ -18,23 +18,24 @@ const Profile = () => {
                     <div class="form-group row">
                         <label for="email" class="col-sm-2 col-form-label">
                             Email </label>
-                        <div class="col-sm-6">
+                        <div class="col-sm-4">
                             <input class="form-control wbdv-field email"
                                    type="email"
                                    id="email"
                                    value="alice@wonderland.com"/>
                         </div>
+                    </div>
                      <div class="form-group row">
                         <label for="role" class="col-sm-2 col-form-label">
                             Role </label>
-                        <div class="col-sm-6">
+                        <div class="col-sm-4">
                             <select class="custom-select" id="role">
                                 <option value="Producer">Producer</option>
                                 <option value="Regular User">Regular User</option>
                             </select>
                         </div>
                     </div>
-                    </div>
+
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label"></label>
                         <div class="col-sm-6">
