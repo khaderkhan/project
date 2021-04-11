@@ -24,6 +24,16 @@ const Profile = () => {
                                    id="email"
                                    value="alice@wonderland.com"/>
                         </div>
+                     <div class="form-group row">
+                        <label for="role" class="col-sm-2 col-form-label">
+                            Role </label>
+                        <div class="col-sm-6">
+                            <select class="custom-select" id="role">
+                                <option value="Producer">Producer</option>
+                                <option value="Regular User">Regular User</option>
+                            </select>
+                        </div>
+                    </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label"></label>
