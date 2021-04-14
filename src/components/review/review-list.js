@@ -4,6 +4,8 @@ import {connect} from 'react-redux'
 import reviewService from '../../services/review-service'
 import ReviewItem from "./review-item";
 import movieService from "../../services/movies-service"
+import { bake_cookie, read_cookie, delete_cookie } from 'sfcookies';
+
 
 
 
@@ -33,6 +35,8 @@ const ReviewList = (
     const [movie, setMovie] = useState({})
 
     useEffect(()=>{
+
+
         movieService.findMovieById(movieID).then(m => setMovie(m))
         findAllReviewsForMovie(movieID)
     },[movieID])
@@ -55,13 +59,17 @@ const ReviewList = (
                           id="reviewBody"
                           onChange={(event)=> setReviewBody(event.target.value)}/>
                           <button onClick={() => {
+                             const firstName = read_cookie("firstName")
+                             const lastName = read_cookie("firstName")
+                             const email = read_cookie("email")
+
                               createReview(movieID, {
                                   title: title,
                                   review: reviewBody,
                                   movieId: movieID,
                                   movieName: movie.original_title,
-                                  reviewer: 'place holder',
-                                  reviewerId: 'place holder'
+                                  reviewer: firstName + lastName,
+                                  reviewerId: email
                               })
                           }}
                           className="btn btn-primary btn-block">

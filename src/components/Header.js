@@ -5,6 +5,8 @@ import { GoogleLogin } from 'react-google-login';
 import { bake_cookie, read_cookie, delete_cookie } from 'sfcookies';
 import userService from '../services/user-service'
 
+
+
 const Header = () => {
 
     const cookie_key = 'loginCookie';
@@ -28,6 +30,9 @@ const Header = () => {
         // And, in the profile page, we will provide another button. => If the user requests admin access, then we can grant him the admin privileges.
 
         //const cookie_userType = 
+        bake_cookie("firstName", firstName);
+        bake_cookie("lastName", lastName);
+        bake_cookie("email", email);
         bake_cookie(cookie_key, true);
 
         // to do: Insert the user into the users table in database. 
@@ -39,6 +44,7 @@ const Header = () => {
 
         // To do: nothing. 
     }
+
     return (
         <>
             <Navbar expand="lg" bg="dark" variant="dark">
