@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react'
 import {useParams} from 'react-router-dom'
 import movieService from '../services/movies-service'
 import '../style/MovieDetails.style.css';
+import ReviewList from "./review/review-list";
 
 
 
@@ -10,7 +11,7 @@ const Details = () => {
     const [actors, setActors] = useState([])
     const {movieID} = useParams()
     // const movieID = useParams().movieID
-    console.log("moveiId", movieID)
+
     useEffect(() => {
         movieService.findMovieById(movieID)
             .then(movie => setMovie(movie))
@@ -93,26 +94,30 @@ const Details = () => {
                     </div>
                 </div>
             </div>
-            <div className="movie-features col-lg-3 col-md-4 col-sm-6 ml-5">
-                Cast
+            <div className="movie-features container-fluid mt-2 ml-3">
+               <h3>Cast</h3>
             </div>
             <div className='row'>
                 {
                     // eslint-disable-next-line array-callback-return
-                    actors.cast && actors.cast.map((actor) => {
+                    actors.cast && actors.cast.slice(0,4).map((actor) => {
                         if (actor.original_name && actor.profile_path)
                         return (
-                            <div>
-                                <div className="col-lg-3 col-md-4 col-sm-6 ml-5 img-content">
+                            <div key={actor.profile_path}>
+                                <div className="col-lg-3 col-md-4 col-sm-6 img-content">
                                     <img src={`https://image.tmdb.org/t/p/original/${actor.profile_path}`}/>
                                 </div>
-                                <div key={actor.id} className="col-lg-3 col-md-4 col-sm-6 ml-5">
+                                <div key={actor.id} className="col-lg-3 col-md-4 col-sm-6">
                                     {actor.original_name}
                                 </div>
                             </div>
                         );
                     })
                 }
+            </div>
+            <div className='container-fluid'>
+                <h2> Reviews</h2>
+                <ReviewList/>
             </div>
 
             {/* {JSON.stringify(movie)} */}

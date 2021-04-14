@@ -1,4 +1,6 @@
 const Register = () => {
+
+
     return(
         <div className="Login">
             <form>

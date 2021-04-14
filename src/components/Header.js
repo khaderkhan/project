@@ -5,8 +5,6 @@ import { GoogleLogin } from 'react-google-login';
 import { bake_cookie, read_cookie, delete_cookie } from 'sfcookies';
 import userService from '../services/user-service'
 
-
-
 const Header = () => {
 
     const cookie_key = 'loginCookie';
@@ -41,7 +39,6 @@ const Header = () => {
 
         // To do: nothing. 
     }
-
     return (
         <>
             <Navbar expand="lg" bg="dark" variant="dark">

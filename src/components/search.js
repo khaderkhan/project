@@ -97,18 +97,6 @@ const Search = () => {
                 </Form>
             </Navbar>
             <div>
-
-                {/*<input*/}
-                {/*    onChange={(event) => {*/}
-                {/*        setSearchTitle(event.target.value)*/}
-                {/*    }}*/}
-                {/*    className="form-control"*/}
-                {/*    value={searchTitle}/>*/}
-                {/*<button*/}
-                {/*    onClick={() => {history.push(`/search/${searchTitle}`)}}*/}
-                {/*    className="btn btn-primary btn-block">*/}
-                {/*    Search*/}
-                {/*</button>*/}
                 <Table columns={getColumns(isLoggedIn)} dataSource={results} />
             </div>
         </>

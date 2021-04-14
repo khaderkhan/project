@@ -8,10 +8,15 @@ import Register from "./components/register";
 import Profile from "./components/profile";
 import StaticProfile from "./components/static-profile";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import {createStore} from "redux";
+import reducers from "./reducers/combine-reducers";
+import {Provider} from "react-redux";
 
 function App() {
-  return (
 
+    const store = createStore(reducers)
+  return (
+        <Provider store={store}>
         <BrowserRouter>
             <div className="container-fluid">
             <Route exact={true}
@@ -46,6 +51,7 @@ function App() {
             </Route>
 
         </BrowserRouter>
+        </Provider>
   );
 }
 

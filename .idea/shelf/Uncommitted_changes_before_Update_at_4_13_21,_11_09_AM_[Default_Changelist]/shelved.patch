@@ -1,0 +1,148 @@
+Index: src/components/register.js
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>const Register = () => {\n    return(\n        <div className=\"Login\">\n            <form>\n            <h1>Sign Up</h1>\n            <div className=\"mb-3 row\">\n                <label htmlFor=\"username\"\n                       className=\"col-sm-2 col-form-label\">\n                    Username\n                </label>\n                <div className=\"col-sm-10\">\n                    <input type=\"text\"\n                           className=\"form-control\"\n                           id=\"username\"\n                           title=\"Please enter your user name\"\n                           placeholder=\"Alice\"/>\n                </div>\n            </div>\n            <div className=\"mb-3 row\">\n                <label htmlFor=\"password\"\n                       className=\"col-sm-2 col-form-label\">\n                    Password\n                </label>\n                <div className=\"col-sm-10\">\n                    <input type=\"inputPassword\"\n                           className=\"form-control\"\n                           title=\"Please enter your password\"\n                           placeholder=\"1234qwer!@#$\"\n                           id=\"password\"/>\n                </div>\n            </div>\n            <div className=\"mb-3 row\">\n                <label htmlFor=\"verifyPassword\"\n                       className=\"col-sm-2 col-form-label\">\n                    Verify Password\n                </label>\n                <div className=\"col-sm-10\">\n                    <input type=\"inputPassword\"\n                           className=\"form-control\"\n                           title=\"Please enter your password\"\n                           placeholder=\"1234qwer!@#$\"\n                           id=\"verifyPassword\"/>\n                </div>\n            </div>\n\n            <div className=\"mb-3 row\">\n                <label htmlFor=\"password\"\n                       className=\"col-sm-2 col-form-label\">\n\n                </label>\n                <div className=\"col-sm-10\">\n                    <a className=\"btn btn-primary btn-block\"\n                       href=\"/\">\n                        Sign Up\n                    </a>\n                </div>\n            </div>\n            <div className=\"mb-3 row\">\n                <label htmlFor=\"password\"\n                       className=\"col-sm-2 col-form-label\">\n\n                </label>\n                <div className=\"col-sm-10\">\n                    <a\n                        href=\"/\">\n                        Login\n                    </a>\n                </div>\n            </div>\n            <div className=\"mb-3 row\">\n                <label htmlFor=\"password\"\n                       className=\"col-sm-2 col-form-label\">\n                </label>\n                <div className=\"col-sm-10\">\n                    <a href=\"/\">\n                        Cancel\n                    </a>\n                </div>\n            </div>\n\n            </form>\n        </div>\n    )\n}\nexport default Register;
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/components/register.js b/src/components/register.js
+--- a/src/components/register.js	(revision cc0ada2b277bc854f08e603f72238cab5359fdb2)
++++ b/src/components/register.js	(date 1618158429882)
+@@ -1,4 +1,6 @@
+ const Register = () => {
++
++
+     return(
+         <div className="Login">
+             <form>
+Index: src/components/Header.js
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import {Navbar, Nav, FormControl, Form, Button, NavDropdown, Container} from 'react-bootstrap'\nimport {Link} from \"react-router-dom\";\nimport React from \"react\";\nimport { GoogleLogin } from 'react-google-login';\nimport { bake_cookie, read_cookie, delete_cookie } from 'sfcookies';\nimport userService from '../services/user-service'\n\n\n\nconst Header = () => {\n\n    const cookie_key = 'loginCookie';\n    const responseGoogleSuccess = (response) => {\n\n        console.log(\"response google login\", response);\n        console.log(\"response type\", response.type)\n        const firstName = response.profileObj.givenName\n        const lastName = response.profileObj.familyName\n        const email = response.profileObj.email\n        const newUser = {\n            firstName,\n            lastName,\n            email,\n            userName: email,\n        }\n        userService.createUser(newUser)\n\n        // Note: Since we're using Google login and not relying on the traditional logging system, we will not have the admin access in the normal way. \n        // So, for the regular user, we will have another column called type in the database. \n        // And, in the profile page, we will provide another button. => If the user requests admin access, then we can grant him the admin privileges.\n\n        //const cookie_userType = \n        bake_cookie(cookie_key, true);\n\n        // to do: Insert the user into the users table in database. \n      }\n    \n    const responseGoogleFailure = (response) => {\n        console.log(response);\n        delete_cookie(cookie_key);\n\n        // To do: nothing. \n    }\n\n    return (\n        <>\n            <Navbar expand=\"lg\" bg=\"dark\" variant=\"dark\">\n                <Navbar.Brand href=\"#home\" className=\"pl-2 pt-2 h1\">\n                    Movie Reviewer App\n                </Navbar.Brand>\n                <Navbar.Toggle aria-controls=\"responsive-navbar-nav\" />\n                <Navbar.Collapse id=\"responsive-navbar-nav\">\n                    <Nav className=\"mr-auto\">\n                        <Nav.Link href=\"/search\">\n                            Search\n                        </Nav.Link>\n                    </Nav>\n                    <Form inline>\n                        <Link to=\"/profile\">\n                        <Button className=\"mr-2\"\n                                variant=\"outline-primary\">\n                            Profile\n                        </Button>\n                        </Link>\n                    </Form>\n                </Navbar.Collapse>\n            </Navbar>\n            <GoogleLogin\n    clientId=\"1039352677511-g79k2dj640dlsr9dehkgaa1j7ujmi4hi.apps.googleusercontent.com\"\n    buttonText=\"Login\"\n    onSuccess={responseGoogleSuccess}\n    onFailure={responseGoogleFailure}\n    cookiePolicy={'single_host_origin'}\n  />\n\n        </>\n\n    )\n}\n\nexport default Header;
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/components/Header.js b/src/components/Header.js
+--- a/src/components/Header.js	(revision cc0ada2b277bc854f08e603f72238cab5359fdb2)
++++ b/src/components/Header.js	(date 1618158726056)
+@@ -5,8 +5,6 @@
+ import { bake_cookie, read_cookie, delete_cookie } from 'sfcookies';
+ import userService from '../services/user-service'
+ 
+-
+-
+ const Header = () => {
+ 
+     const cookie_key = 'loginCookie';
+@@ -41,7 +39,6 @@
+ 
+         // To do: nothing. 
+     }
+-
+     return (
+         <>
+             <Navbar expand="lg" bg="dark" variant="dark">
+Index: src/components/details.js
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import React, {useState, useEffect} from 'react'\nimport {useParams} from 'react-router-dom'\nimport movieService from '../services/movies-service'\nimport '../style/MovieDetails.style.css';\n\n\n\nconst Details = () => {\n    const [movie, setMovie] = useState({})\n    const [actors, setActors] = useState([])\n    const {movieID} = useParams()\n    // const movieID = useParams().movieID\n    console.log(\"moveiId\", movieID)\n    useEffect(() => {\n        movieService.findMovieById(movieID)\n            .then(movie => setMovie(movie))\n        movieService.findActorsByMovieId(movieID)\n            .then(actors =>  setActors(actors))\n\n    }, [movieID])\n\n    \n\n\n    return (\n        <div className=\"container-fluid\">\n            <div className=\"row mt-5\">\n                <div className=\"col-lg-3 col-md-4 col-sm-6 ml-5 img-content\">\n                    <img src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`}/>\n                </div>\n\n                <div className=\"col-lg-8 col-md-7 col-sm-5 ml-2 col-md-offset-2\">\n                    <div className=\"movie-title\">\n                        {movie.original_title}\n                    </div>\n                    <div className=\"movie-features\">\n                        Popularity: {movie.popularity}\n                    </div>\n                    <div className=\"movie-features\">\n                        Overview\n                    </div>\n                    <div>\n                        {movie.overview}\n                    </div>\n                    <div className=\"mt-3\">\n                        <div className=\"row\">\n                            <div className=\"col-6\">\n                                <div className=\"movie-features\">\n                                    Genres\n                                </div>\n                                <div className='row'>\n                                    {\n                                        movie.genres && movie.genres.map((genre, index) => {\n                                        return (\n                                            <div key={index} className='col-3 ml-2 btn genre-button'>\n                                                {genre.name}\n                                            </div>\n                                        );\n                                    })\n                                    }\n                                </div>\n                            </div>\n                            <div className=\"col-6\">\n                                <div className=\"movie-features\">\n                                    Runtime\n                                </div>\n                                <div>\n                                    {movie.runtime} mins\n                                </div>\n                            </div>\n                        </div>\n                        <div className=\"row mt-5\">\n                            <div className=\"col-6\">\n                                <div className=\"movie-features\">\n                                    Original Language\n                                </div>\n                                <div>\n                                    {movie.original_language}\n                                </div>\n                            </div>\n                            <div className=\"col-6\">\n                                <div className=\"movie-features\">\n                                    HomePage\n                                </div>\n                                <div>\n                                    <a href={movie.homepage}>{movie.homepage}</a>\n                                </div>\n                            </div>\n                        </div>\n\n\n\n                    </div>\n                </div>\n            </div>\n            <div className=\"movie-features col-lg-3 col-md-4 col-sm-6 ml-5\">\n                Cast\n            </div>\n            <div className='row'>\n                {\n                    // eslint-disable-next-line array-callback-return\n                    actors.cast && actors.cast.map((actor) => {\n                        if (actor.original_name && actor.profile_path)\n                        return (\n                            <div>\n                                <div className=\"col-lg-3 col-md-4 col-sm-6 ml-5 img-content\">\n                                    <img src={`https://image.tmdb.org/t/p/original/${actor.profile_path}`}/>\n                                </div>\n                                <div key={actor.id} className=\"col-lg-3 col-md-4 col-sm-6 ml-5\">\n                                    {actor.original_name}\n                                </div>\n                            </div>\n                        );\n                    })\n                }\n            </div>\n\n            {/* {JSON.stringify(movie)} */}\n        </div>\n    )\n}\n\nexport default Details
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/components/details.js b/src/components/details.js
+--- a/src/components/details.js	(revision cc0ada2b277bc854f08e603f72238cab5359fdb2)
++++ b/src/components/details.js	(date 1618160563247)
+@@ -93,20 +93,20 @@
+                     </div>
+                 </div>
+             </div>
+-            <div className="movie-features col-lg-3 col-md-4 col-sm-6 ml-5">
+-                Cast
++            <div className="movie-features container-fluid mt-2 ml-3">
++               <h3>Cast</h3>
+             </div>
+             <div className='row'>
+                 {
+                     // eslint-disable-next-line array-callback-return
+-                    actors.cast && actors.cast.map((actor) => {
++                    actors.cast && actors.cast.slice(0,4).map((actor) => {
+                         if (actor.original_name && actor.profile_path)
+                         return (
+-                            <div>
+-                                <div className="col-lg-3 col-md-4 col-sm-6 ml-5 img-content">
++                            <div >
++                                <div className="col-lg-3 col-md-4 col-sm-6 img-content">
+                                     <img src={`https://image.tmdb.org/t/p/original/${actor.profile_path}`}/>
+                                 </div>
+-                                <div key={actor.id} className="col-lg-3 col-md-4 col-sm-6 ml-5">
++                                <div key={actor.id} className="col-lg-3 col-md-4 col-sm-6">
+                                     {actor.original_name}
+                                 </div>
+                             </div>
+@@ -114,6 +114,10 @@
+                     })
+                 }
+             </div>
++            <div className='container-fluid'>
++                <h3>Critic Reviews</h3>
++                Reviews will come here (as components)
++            </div>
+ 
+             {/* {JSON.stringify(movie)} */}
+         </div>
+Index: src/services/movies-service.js
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>export const findMovieByTitle = (title) =>\n    fetch(`https://api.themoviedb.org/3/search/movie?api_key=eea1a7fc0d5c72b36736e248dc5e2693&language=en-US&query=${title}&include_adult=false`)\n        .then(response => response.json())\n\nexport const findMovieById = (imdbID) =>\n    fetch(`https://api.themoviedb.org/3/movie/${imdbID}?api_key=eea1a7fc0d5c72b36736e248dc5e2693&language=en-US`)\n        .then(response => response.json())\n\nexport const findActorsByMovieId = (movieId) =>\n    fetch(`https://api.themoviedb.org/3/movie/${movieId}/credits?api_key=eea1a7fc0d5c72b36736e248dc5e2693&language=en-US`)\n        .then(response => response.json())\n\nexport default {\n    findMovieByTitle,\n    findMovieById,\n    findActorsByMovieId\n}\n\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/services/movies-service.js b/src/services/movies-service.js
+--- a/src/services/movies-service.js	(revision cc0ada2b277bc854f08e603f72238cab5359fdb2)
++++ b/src/services/movies-service.js	(date 1618326395161)
+@@ -1,13 +1,17 @@
++
++const MOVIE_URL = "https://api.themoviedb.org/3/search/movie"
++const API_KEY = "api_key=eea1a7fc0d5c72b36736e248dc5e2693&language=en-US"
++
+ export const findMovieByTitle = (title) =>
+-    fetch(`https://api.themoviedb.org/3/search/movie?api_key=eea1a7fc0d5c72b36736e248dc5e2693&language=en-US&query=${title}&include_adult=false`)
++    fetch(`${MOVIE_URL}?${API_KEY}&query=${title}&include_adult=false`)
+         .then(response => response.json())
+ 
+ export const findMovieById = (imdbID) =>
+-    fetch(`https://api.themoviedb.org/3/movie/${imdbID}?api_key=eea1a7fc0d5c72b36736e248dc5e2693&language=en-US`)
++    fetch(`${MOVIE_URL}/${imdbID}?${API_KEY}`)
+         .then(response => response.json())
+ 
+ export const findActorsByMovieId = (movieId) =>
+-    fetch(`https://api.themoviedb.org/3/movie/${movieId}/credits?api_key=eea1a7fc0d5c72b36736e248dc5e2693&language=en-US`)
++    fetch(`${MOVIE_URL}/${movieId}/credits?${API_KEY}`)
+         .then(response => response.json())
+ 
+ export default {
+Index: src/components/review/review-list.js
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/components/review/review-list.js b/src/components/review/review-list.js
+new file mode 100644
+--- /dev/null	(date 1618326117481)
++++ b/src/components/review/review-list.js	(date 1618326117481)
+@@ -0,0 +1,1 @@
++import React, { useEffect } from "react";
+Index: src/services/review-service.js
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/services/review-service.js b/src/services/review-service.js
+new file mode 100644
+--- /dev/null	(date 1618326395154)
++++ b/src/services/review-service.js	(date 1618326395154)
+@@ -0,0 +1,4 @@
++const BASE_URL = "http://localhost:4000/api/"
++
++
++

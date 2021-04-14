@@ -1,0 +1,35 @@
+Index: src/components/register.js
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>const Register = () => {\n    return(\n        <div className=\"Login\">\n            <form>\n            <h1>Sign Up</h1>\n            <div className=\"mb-3 row\">\n                <label htmlFor=\"username\"\n                       className=\"col-sm-2 col-form-label\">\n                    Username\n                </label>\n                <div className=\"col-sm-10\">\n                    <input type=\"text\"\n                           className=\"form-control\"\n                           id=\"username\"\n                           title=\"Please enter your user name\"\n                           placeholder=\"Alice\"/>\n                </div>\n            </div>\n            <div className=\"mb-3 row\">\n                <label htmlFor=\"password\"\n                       className=\"col-sm-2 col-form-label\">\n                    Password\n                </label>\n                <div className=\"col-sm-10\">\n                    <input type=\"inputPassword\"\n                           className=\"form-control\"\n                           title=\"Please enter your password\"\n                           placeholder=\"1234qwer!@#$\"\n                           id=\"password\"/>\n                </div>\n            </div>\n            <div className=\"mb-3 row\">\n                <label htmlFor=\"verifyPassword\"\n                       className=\"col-sm-2 col-form-label\">\n                    Verify Password\n                </label>\n                <div className=\"col-sm-10\">\n                    <input type=\"inputPassword\"\n                           className=\"form-control\"\n                           title=\"Please enter your password\"\n                           placeholder=\"1234qwer!@#$\"\n                           id=\"verifyPassword\"/>\n                </div>\n            </div>\n\n            <div className=\"mb-3 row\">\n                <label htmlFor=\"password\"\n                       className=\"col-sm-2 col-form-label\">\n\n                </label>\n                <div className=\"col-sm-10\">\n                    <a className=\"btn btn-primary btn-block\"\n                       href=\"/\">\n                        Sign Up\n                    </a>\n                </div>\n            </div>\n            <div className=\"mb-3 row\">\n                <label htmlFor=\"password\"\n                       className=\"col-sm-2 col-form-label\">\n\n                </label>\n                <div className=\"col-sm-10\">\n                    <a\n                        href=\"/\">\n                        Login\n                    </a>\n                </div>\n            </div>\n            <div className=\"mb-3 row\">\n                <label htmlFor=\"password\"\n                       className=\"col-sm-2 col-form-label\">\n                </label>\n                <div className=\"col-sm-10\">\n                    <a href=\"/\">\n                        Cancel\n                    </a>\n                </div>\n            </div>\n\n            </form>\n        </div>\n    )\n}\nexport default Register;
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/components/register.js b/src/components/register.js
+--- a/src/components/register.js	(revision c2b782bf4dcdbba3a34c81d8879fbc47be4663cf)
++++ b/src/components/register.js	(date 1617816304936)
+@@ -1,4 +1,6 @@
+ const Register = () => {
++
++
+     return(
+         <div className="Login">
+             <form>
+Index: src/components/Header.js
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import {Navbar, Nav, FormControl, Form, Button, NavDropdown, Container} from 'react-bootstrap'\nimport {Link} from \"react-router-dom\";\nimport React from \"react\";\nimport { GoogleLogin } from 'react-google-login';\n\n\nconst Header = () => {\n\n    const responseGoogleSuccess = (response) => {\n        console.log(response);\n        // to do: Insert the user into the users table in database. \n      }\n    \n    const responseGoogleFailure = (response) => {\n        console.log(response);\n        // To do: nothing. \n    }\n\n    return (\n        <>\n            <Navbar expand=\"lg\" bg=\"dark\" variant=\"dark\">\n                <Navbar.Brand href=\"#home\" className=\"pl-2 pt-2 h1\">\n                    Movie Reviewer App\n                </Navbar.Brand>\n                <Navbar.Toggle aria-controls=\"responsive-navbar-nav\" />\n                <Navbar.Collapse id=\"responsive-navbar-nav\">\n                    <Nav className=\"mr-auto\">\n                        <Nav.Link href=\"/search\">\n                            Search\n                        </Nav.Link>\n                    </Nav>\n                    <Form inline>\n                        <Link to=\"/profile\">\n                        <Button className=\"mr-2\"\n                                variant=\"outline-primary\">\n                            Profile\n                        </Button>\n                        </Link>\n                    </Form>\n                </Navbar.Collapse>\n            </Navbar>\n            <GoogleLogin\n    clientId=\"1039352677511-g79k2dj640dlsr9dehkgaa1j7ujmi4hi.apps.googleusercontent.com\"\n    buttonText=\"Login\"\n    onSuccess={responseGoogleSuccess}\n    onFailure={responseGoogleFailure}\n    cookiePolicy={'single_host_origin'}\n  />\n\n        </>\n\n    )\n}\n\nexport default Header;
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/components/Header.js b/src/components/Header.js
+--- a/src/components/Header.js	(revision c2b782bf4dcdbba3a34c81d8879fbc47be4663cf)
++++ b/src/components/Header.js	(date 1617554282369)
+@@ -15,7 +15,6 @@
+         console.log(response);
+         // To do: nothing. 
+     }
+-
+     return (
+         <>
+             <Navbar expand="lg" bg="dark" variant="dark">
