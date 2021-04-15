@@ -26,6 +26,7 @@ const Details = () => {
     return (
         <div className="container-fluid">
             <div className="row mt-5">
+
                 <div className="col-lg-3 col-md-4 col-sm-6 ml-5 img-content">
                     <img src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`}/>
                 </div>

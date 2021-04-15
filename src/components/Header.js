@@ -1,55 +1,28 @@
 import {Navbar, Nav, FormControl, Form, Button, NavDropdown, Container} from 'react-bootstrap'
 import {Link} from "react-router-dom";
-import React from "react";
-import { GoogleLogin } from 'react-google-login';
-import { bake_cookie, read_cookie, delete_cookie } from 'sfcookies';
-import userService from '../services/user-service'
+import React, {useState, useEffect} from "react";
+import LogIn from "./google-login"
+import {read_cookie} from "sfcookies";
 
 
 
 const Header = () => {
 
-    const cookie_key = 'loginCookie';
-    const responseGoogleSuccess = (response) => {
-
-        console.log("response google login", response);
-        console.log("response type", response.type)
-        const firstName = response.profileObj.givenName
-        const lastName = response.profileObj.familyName
-        const email = response.profileObj.email
-        const newUser = {
-            firstName,
-            lastName,
-            email,
-            userName: email,
+    const [isLoggedIn, setLoggedIn] = useState(false);
+    useEffect(() => {
+        const loggedIn = read_cookie("loginCookie")
+        if (loggedIn === true) {
+            setLoggedIn(loggedIn)
         }
-        userService.createUser(newUser)
+    },[setLoggedIn])
 
-        // Note: Since we're using Google login and not relying on the traditional logging system, we will not have the admin access in the normal way. 
-        // So, for the regular user, we will have another column called type in the database. 
-        // And, in the profile page, we will provide another button. => If the user requests admin access, then we can grant him the admin privileges.
 
-        //const cookie_userType = 
-        bake_cookie("firstName", firstName);
-        bake_cookie("lastName", lastName);
-        bake_cookie("email", email);
-        bake_cookie(cookie_key, true);
-
-        // to do: Insert the user into the users table in database. 
-      }
-    
-    const responseGoogleFailure = (response) => {
-        console.log(response);
-        delete_cookie(cookie_key);
-
-        // To do: nothing. 
-    }
 
     return (
         <>
-            <Navbar expand="lg" bg="dark" variant="dark">
-                <Navbar.Brand href="#home" className="pl-2 pt-2 h1">
-                    Movie Reviewer App
+            <Navbar expand="lg" bg="light" variant="light">
+                <Navbar.Brand href="/" >
+                    <h3 >Movie Reviewer App</h3>
                 </Navbar.Brand>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">
@@ -58,24 +31,27 @@ const Header = () => {
                             Search
                         </Nav.Link>
                     </Nav>
-                    <Form inline>
-                        <Link to="/profile">
-                        <Button className="mr-2"
-                                variant="outline-primary">
-                            Profile
-                        </Button>
-                        </Link>
-                    </Form>
+                    {
+                        !isLoggedIn &&
+                        <LogIn/>
+                    }
+                    {
+                        isLoggedIn &&
+                        <Form inline>
+                            <Link to="/profile">
+                                <Button className="mr-2 ml-2"
+                                        variant="outline-primary">
+                                    Profile
+                                </Button>
+                            </Link>
+                            <Button className="mr-2 ml-2"
+                                    variant="outline-primary">
+                                Sign Out
+                            </Button>
+                        </Form>
+                    }
                 </Navbar.Collapse>
             </Navbar>
-            <GoogleLogin
-    clientId="1039352677511-g79k2dj640dlsr9dehkgaa1j7ujmi4hi.apps.googleusercontent.com"
-    buttonText="Login"
-    onSuccess={responseGoogleSuccess}
-    onFailure={responseGoogleFailure}
-    cookiePolicy={'single_host_origin'}
-  />
-
         </>
 
     )

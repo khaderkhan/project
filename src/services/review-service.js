@@ -23,10 +23,18 @@ const deleteReview = (reviewId) =>
         method: 'DELETE'
     })
         .then(res => res.json())
-
+const updateReview = (reviewId, review) =>
+    fetch(`${BASE_URL}`,{
+        method: 'PUT',
+        body: JSON.stringify(review),
+        headers:{
+            'content-type': 'application/json'
+        }
+    })
+        .then(res => res.json())
 
 
 export default {
     createReview, findAllReviewsForMovie,
-    deleteReview
+    deleteReview, updateReview
 }

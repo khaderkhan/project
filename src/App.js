@@ -19,16 +19,11 @@ function App() {
         <Provider store={store}>
         <BrowserRouter>
             <div className="container-fluid">
-            <Route exact={true}
+            <Route
                    path="/">
                 <Header/>
             </Route>
             </div>
-            {/*    <Route*/}
-            {/*    exact={true}*/}
-            {/*    path={["/"]}>*/}
-            {/*    <Home/>*/}
-            {/*</Route>*/}
             <Route
                 exact={true}
                 path={["/search", "/search/:title"]}>

@@ -27,6 +27,16 @@ const reviewReducer = (state = initialState, action) => {
                     return r._id !== action.reviewToDelete._id;
                 })
             };
+        case "UPDATE_REVIEW":
+            return {
+                reviews: state.reviews.map(review => {
+                    if(review._id === action.review._id){
+                        return action.review
+                    } else{
+                        return review
+                    }
+                })
+            }
         default:
             return state;
     }
