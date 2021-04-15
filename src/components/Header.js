@@ -2,7 +2,7 @@ import {Navbar, Nav, FormControl, Form, Button, NavDropdown, Container} from 're
 import {Link} from "react-router-dom";
 import React, {useState, useEffect} from "react";
 import LogIn from "./google-login"
-import {read_cookie} from "sfcookies";
+import {read_cookie, delete_cookie} from "sfcookies";
 
 
 
@@ -14,7 +14,15 @@ const Header = () => {
         if (loggedIn === true) {
             setLoggedIn(loggedIn)
         }
-    },[setLoggedIn])
+    },[isLoggedIn])
+    const deleteCookies = () => {
+        delete_cookie("firstName")
+        delete_cookie("lastName")
+        delete_cookie("email")
+        delete_cookie("loginCookie")
+        setLoggedIn(false)
+
+    }
 
 
 
@@ -45,7 +53,7 @@ const Header = () => {
                                 </Button>
                             </Link>
                             <Button className="mr-2 ml-2"
-                                    variant="outline-primary">
+                                    variant="outline-primary" onClick = {deleteCookies}>
                                 Sign Out
                             </Button>
                         </Form>
