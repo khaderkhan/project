@@ -3,20 +3,22 @@ import {bake_cookie, read_cookie, delete_cookie} from 'sfcookies';
 import userService from '../services/user-service'
 import React, {useEffect, useState} from "react";
 import {connect} from 'react-redux'
+import {Button, Form, Navbar} from "react-bootstrap";
+import {Link} from "react-router-dom";
 
 const LogIn = (
     {
         users = [],
         createUser,
-        findUserByEmail
+        findUserByEmail,
+
     }
 ) => {
     const cookie_key = 'loginCookie';
     const [newUser, setNewUser] = useState({})
+    const [isLoggedIn, setLoggedIn] = useState(false);
     const responseGoogleSuccess = (response) => {
-
-        console.log("response google login", response);
-        console.log("response type", response.type)
+        console.log('responseGoogleSuccess')
         const firstName = response.profileObj.givenName
         const lastName = response.profileObj.familyName
         const email = response.profileObj.email
@@ -27,6 +29,7 @@ const LogIn = (
             userName: email,
             type: 'admin'
         }
+        console.log("from responseGoogleSucces new user is:", newUser)
         setNewUser(newUser)
 
         // userService.createUser(newUser)
@@ -42,29 +45,62 @@ const LogIn = (
         bake_cookie("lastName", lastName);
         bake_cookie("email", email);
         bake_cookie(cookie_key, true);
-
+        // setLoggedIn(true)
         // to do: Insert the user into the users table in database.
     }
     const responseGoogleFailure = (response) => {
-        console.log(response);
         delete_cookie(cookie_key);
-
     }
 
     useEffect(() => {
-
+        console.log("useEffect has called and loggedIn is:", isLoggedIn)
+        console.log("from useEffect user is:", newUser)
         if (!findUserByEmail(newUser.email)) {
             createUser(newUser);
         }
-    })
+        const loggedIn = read_cookie("loginCookie")
+        if (loggedIn === true) {
+            setLoggedIn(loggedIn)
+        }
+
+    }, [responseGoogleSuccess, responseGoogleFailure])
+    const deleteCookies = () => {
+        console.log("deleteCookies has been called")
+        delete_cookie("firstName")
+        delete_cookie("lastName")
+        delete_cookie("email")
+        delete_cookie("loginCookie")
+        // setLoggedIn(false)
+
+    }
     return (
-        <GoogleLogin
-            clientId="1039352677511-g79k2dj640dlsr9dehkgaa1j7ujmi4hi.apps.googleusercontent.com"
-            buttonText="Login"
-            onSuccess={responseGoogleSuccess}
-            onFailure={responseGoogleFailure}
-            cookiePolicy={'single_host_origin'}
-        />
+        <div>
+            {
+                !isLoggedIn &&
+                <GoogleLogin
+                    clientId="1039352677511-g79k2dj640dlsr9dehkgaa1j7ujmi4hi.apps.googleusercontent.com"
+                    buttonText="Login"
+                    onSuccess={responseGoogleSuccess}
+                    onFailure={responseGoogleFailure}
+                    cookiePolicy={'single_host_origin'}
+                />
+            }
+            {
+                isLoggedIn &&
+                <Form inline>
+                    <Link to="/profile">
+                        <Button className="mr-2 ml-2"
+                                variant="outline-primary">
+                            Profile
+                        </Button>
+                    </Link>
+                    <Button className="mr-2 ml-2"
+                            variant="outline-primary" onClick={deleteCookies}>
+                        Sign Out
+                    </Button>
+                </Form>
+            }
+        </div>
     )
 }
 
@@ -75,23 +111,22 @@ const stpm = (state) => {
 }
 
 const dtpm = (dispatch) => ({
-        createUser: (user) => {
-            userService.createUser(user)
-                .then(theUser => dispatch({
-                                              type: "CREATE_USER",
-                                              user: theUser
-                                          }))
-        },
+    createUser: (user) => {
+        console.log(user)
+        userService.createUser(user)
+            .then(theUser => dispatch({
+                                          type: "CREATE_USER",
+                                          user: theUser
+                                      }))
+    },
     findUserByEmail: (email) => {
-            userService.findUserByEmail(email)
-                .then(theUser => dispatch({
-                                              type: "FIND_USER_BY_EMAIL",
-                                              user: theUser
-                                          }))
-        },
-
+        userService.findUserByEmail(email)
+            .then(theUser => dispatch({
+                                          type: "FIND_USER_BY_EMAIL",
+                                          user: theUser
+                                      }))
+    },
 
 })
-
 
 export default connect(stpm, dtpm)(LogIn)

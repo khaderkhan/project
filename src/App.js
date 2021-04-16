@@ -15,39 +15,39 @@ import {Provider} from "react-redux";
 function App() {
 
     const store = createStore(reducers)
-  return (
+    return (
         <Provider store={store}>
-        <BrowserRouter>
-            <div className="container-fluid">
-            <Route
-                   path="/">
-                <Header/>
-            </Route>
-            </div>
-            <Route
-                exact={true}
-                path={["/search", "/search/:title"]}>
-                <Search/>
-            </Route>
-            <Route
-                exact={true}
-                path={["/details/:movieID"]}>
-                <Details/>
-            </Route>
-            <Route
-                exact={true}
-                path={["/profile"]}>
-                <Profile/>
-            </Route>
-            <Route
-                exact={true}
-                path={["/profile/:profileId"]}>
-                <StaticProfile/>
-            </Route>
+            <BrowserRouter>
+                <div className="container-fluid">
+                    <Route
+                        path="/">
+                        <Header/>
+                    </Route>
+                </div>
+                <Route
+                    exact={true}
+                    path={["/search", "/search/:title"]}>
+                    <Search/>
+                </Route>
+                <Route
+                    exact={true}
+                    path={["/details/:movieID"]}>
+                    <Details/>
+                </Route>
+                <Route
+                    exact={true}
+                    path={["/profile"]}>
+                    <Profile/>
+                </Route>
+                <Route
+                    exact={true}
+                    path={["/profile/:profileId"]}>
+                    <StaticProfile/>
+                </Route>
 
-        </BrowserRouter>
+            </BrowserRouter>
         </Provider>
-  );
+    );
 }
 
 export default App;

@@ -10,31 +10,42 @@ const ReviewItem = (
     const [editing, setEditing] = useState(false)
     const [cachedItem, setCachedItem] = useState(rev)
 
+    const loggedInUserName = read_cookie("email")
+    const loggedInFirstName = read_cookie("firstName")
+    console.log("username is:", loggedInUserName)
+
     return (
         <>
             {
                 !editing &&
-                    <div className="card shadow p-3 mb-5 bg-white rounded">
-                        <div className="card-body">
+                <div className="card shadow p-3 mb-5 bg-white rounded">
+                    <div className="card-body">
+                        {
+                        loggedInUserName === rev.reviewerId &&
+
+                            <>
                             <i onClick={() => setEditing(true)}
                                className="fas fa-edit float-right mt-1 ml-3"/>
                             <i onClick={() => deleteReview(rev)}
-                               className="fas fa-trash float-right mt-1"/>
-                            <h5 className="card-title">{rev.title}</h5>
-                            <p className="card-text">{rev.review}</p>
-                        </div>
-                        <div className="card-footer">
-                            <small className="text-muted">{new Date(rev.createdAt)
-                                .toLocaleDateString(
-                                    'en-US', {
-                                        hour: 'numeric', minute: 'numeric', hour12: true
-                                    })}
-                            </small>
-                        </div>
+                            className="fas fa-trash float-right mt-1"/>
+                            </>
+                        }
+                        <h5 className="card-title">{rev.title}</h5>
+                        <p className="card-text">{rev.review}</p>
+                    </div>
+                    <div className="card-footer">
+                        <small className="text-muted">{new Date(rev.createdAt)
+                            .toLocaleDateString(
+                                'en-US', {
+                                    hour: 'numeric', minute: 'numeric', hour12: true
+                                })}
+                        </small>
+                        <small className="text-muted float-right"> By | {loggedInFirstName}</small>
+                    </div>
                 </div>
             }
             {
-                editing &&
+                editing && loggedInUserName === rev.reviewerId &&
                 <>
                     <label htmlFor="reviewTitle">Title</label>
                     <input className="form-control"

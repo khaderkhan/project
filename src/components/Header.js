@@ -8,21 +8,21 @@ import {read_cookie, delete_cookie} from "sfcookies";
 
 const Header = () => {
 
-    const [isLoggedIn, setLoggedIn] = useState(false);
-    useEffect(() => {
-        const loggedIn = read_cookie("loginCookie")
-        if (loggedIn === true) {
-            setLoggedIn(loggedIn)
-        }
-    },[isLoggedIn])
-    const deleteCookies = () => {
-        delete_cookie("firstName")
-        delete_cookie("lastName")
-        delete_cookie("email")
-        delete_cookie("loginCookie")
-        setLoggedIn(false)
-
-    }
+    // const [isLoggedIn, setLoggedIn] = useState(false);
+    // useEffect(() => {
+    //     const loggedIn = read_cookie("loginCookie")
+    //     if (loggedIn === true) {
+    //         setLoggedIn(loggedIn)
+    //     }
+    // },[isLoggedIn])
+    // const deleteCookies = () => {
+    //     delete_cookie("firstName")
+    //     delete_cookie("lastName")
+    //     delete_cookie("email")
+    //     delete_cookie("loginCookie")
+    //     setLoggedIn(false)
+    //
+    // }
 
 
 
@@ -39,25 +39,26 @@ const Header = () => {
                             Search
                         </Nav.Link>
                     </Nav>
-                    {
-                        !isLoggedIn &&
-                        <LogIn/>
-                    }
-                    {
-                        isLoggedIn &&
-                        <Form inline>
-                            <Link to="/profile">
-                                <Button className="mr-2 ml-2"
-                                        variant="outline-primary">
-                                    Profile
-                                </Button>
-                            </Link>
-                            <Button className="mr-2 ml-2"
-                                    variant="outline-primary" onClick = {deleteCookies}>
-                                Sign Out
-                            </Button>
-                        </Form>
-                    }
+                    <LogIn />
+                    {/*{*/}
+                    {/*    !isLoggedIn &&*/}
+                    {/*    <LogIn />*/}
+                    {/*}*/}
+                    {/*{*/}
+                    {/*    isLoggedIn &&*/}
+                    {/*    <Form inline>*/}
+                    {/*        <Link to="/profile">*/}
+                    {/*            <Button className="mr-2 ml-2"*/}
+                    {/*                    variant="outline-primary">*/}
+                    {/*                Profile*/}
+                    {/*            </Button>*/}
+                    {/*        </Link>*/}
+                    {/*        <Button className="mr-2 ml-2"*/}
+                    {/*                variant="outline-primary" onClick = {deleteCookies}>*/}
+                    {/*            Sign Out*/}
+                    {/*        </Button>*/}
+                    {/*    </Form>*/}
+                    {/*}*/}
                 </Navbar.Collapse>
             </Navbar>
         </>
