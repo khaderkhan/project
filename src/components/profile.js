@@ -1,18 +1,40 @@
+import React, {useState, useEffect} from "react";
 import {Link} from "react-router-dom";
+import {read_cookie, bake_cookie} from "sfcookies";
 
 const Profile = () => {
+
+    const [fname, setFname] = useState(read_cookie("firstName"))
+    const [lname, setLname] = useState(read_cookie("lastName"))
+
+     const handleFnameChange = (e) => {
+        setFname(e.target.value)
+    }
+
+     const handleLnameChange = (e) => {
+             setLname(e.target.value)}
     return(
         <div class="container">
             <h1>Profile</h1>
                 <form>
                     <div class="form-group row">
                         <label for="username" class="col-sm-2 col-form-label">
-                            Username </label>
+                            First Name </label>
                         <div class="col-sm-4">
-                            <input class="form-control wbdv-field wbdv-username"
+                            <input class="form-control wbdv-field wbdv-fname"
+                                   onChange={(e) => handleFnameChange(e)}
+                                   id="fname"
+                                   value={fname}/>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="username" class="col-sm-2 col-form-label">
+                            Last Name </label>
+                        <div class="col-sm-4">
+                            <input class="form-control wbdv-field wbdv-lname"
+                                   onChange={(e) => handleLnameChange(e)}
                                    id="username"
-                                   readonly
-                                   value="Alice"/>
+                                   value={lname}/>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -22,7 +44,8 @@ const Profile = () => {
                             <input class="form-control wbdv-field email"
                                    type="email"
                                    id="email"
-                                   value="alice@wonderland.com"/>
+                                   readonly
+                                   value={read_cookie("email")}/>
                         </div>
                     </div>
                      <div class="form-group row">
@@ -31,7 +54,7 @@ const Profile = () => {
                         <div class="col-sm-4">
                             <select class="custom-select" id="role">
                                 <option value="Producer">Producer</option>
-                                <option value="Regular User">Regular User</option>
+                                <option value="Reviewer">Reviewer</option>
                             </select>
                         </div>
                     </div>
@@ -39,10 +62,8 @@ const Profile = () => {
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label"></label>
                         <div class="col-sm-6">
-                            <a class="btn btn-success btn-block"
-                               href="#">
-                                Update
-                            </a>
+                        <input type="button" class="btn btn-success btn-block" onClick={() => {bake_cookie("firstName", fname);
+                                                                                               bake_cookie("lastName", lname);}} value="Update" />
                         </div>
                     </div>
                 </form>
@@ -58,3 +79,7 @@ const Profile = () => {
 }
 
 export default Profile;
+
+// add to the on click by actually updating the role, db
+//                         then need to fetch reviews
+//                         then need static profile page
