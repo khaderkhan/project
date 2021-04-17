@@ -1,5 +1,6 @@
 import React, {useState} from 'react'
 import {read_cookie} from "sfcookies";
+import {Link, useParams} from "react-router-dom";
 
 const ReviewItem = (
     {
@@ -37,13 +38,21 @@ const ReviewItem = (
                         <p className="card-text">{rev.review}</p>
                     </div>
                     <div className="card-footer">
+                         <small className="text-muted"> {rev.movieName}</small>
+                         <br/>
                         <small className="text-muted">{new Date(rev.createdAt)
                             .toLocaleDateString(
                                 'en-US', {
                                     hour: 'numeric', minute: 'numeric', hour12: true
                                 })}
                         </small>
-                        <small className="text-muted float-right"> By | {loggedInFirstName}</small>
+                        <br/>
+                        <small className="text-muted float-right"> By | {
+                        <Link
+                                                        to={`/profile/${rev.userID}`}>
+                        {loggedInFirstName}
+                         </Link>
+                        }</small>
                     </div>
                 </div>
             }
