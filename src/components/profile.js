@@ -1,9 +1,12 @@
 import React, {useState, useEffect} from "react";
 import {Link} from "react-router-dom";
 import {read_cookie, bake_cookie} from "sfcookies";
+//import reviewService from '../services/review-service'
+import userService from '../services/user-service'
 
 const Profile = () => {
 
+    const [user, setUser] = useState(null)
     const [fname, setFname] = useState(read_cookie("firstName"))
     const [lname, setLname] = useState(read_cookie("lastName"))
 
@@ -13,6 +16,16 @@ const Profile = () => {
 
      const handleLnameChange = (e) => {
              setLname(e.target.value)}
+
+     useEffect(() => {
+            console.log("in useEffect")
+            const userID = read_cookie("userID")
+            console.log("userID", userID)
+             userService.findUserById(userID)
+                 .then(user => setUser(user))
+         }, [])
+
+
     return(
         <div class="container">
             <h1>Profile</h1>
@@ -24,7 +37,7 @@ const Profile = () => {
                             <input class="form-control wbdv-field wbdv-fname"
                                    onChange={(e) => handleFnameChange(e)}
                                    id="fname"
-                                   value={fname}/>
+                                   value={'HI'}/>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -34,7 +47,7 @@ const Profile = () => {
                             <input class="form-control wbdv-field wbdv-lname"
                                    onChange={(e) => handleLnameChange(e)}
                                    id="username"
-                                   value={lname}/>
+                                   value={'ASDF'}/>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -62,8 +75,7 @@ const Profile = () => {
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label"></label>
                         <div class="col-sm-6">
-                        <input type="button" class="btn btn-success btn-block" onClick={() => {bake_cookie("firstName", fname);
-                                                                                               bake_cookie("lastName", lname);}} value="Update" />
+                        <input type="button" class="btn btn-success btn-block" onClick={() => ''} value="Update" />
                         </div>
                     </div>
                 </form>

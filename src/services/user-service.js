@@ -16,6 +16,20 @@ const findUserByEmail = (email) =>
     fetch(`${USER_URL}/${email}`)
         .then(res => res.json())
 
+const findUserById = (userID) =>
+    fetch(`${USER_URL}/${userID}`)
+        .then(res => res.json())
+
+const updateUser = (userId, user) =>
+    fetch(`${USER_URL}`,{
+        method: 'PUT',
+        body: JSON.stringify(user),
+        headers:{
+            'content-type': 'application/json'
+        }
+    })
+        .then(res => res.json())
+
 export default {
-    createUser, findUserByEmail
+    createUser, findUserByEmail, updateUser, findUserById
 }

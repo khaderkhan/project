@@ -17,7 +17,7 @@ const LogIn = (
     const cookie_key = 'loginCookie';
     const [newUser, setNewUser] = useState({})
     const [isLoggedIn, setLoggedIn] = useState(false);
-    const responseGoogleSuccess = (response) => {
+    const responseGoogleSuccess = async (response) => {
         console.log('responseGoogleSuccess')
         const firstName = response.profileObj.givenName
         const lastName = response.profileObj.familyName
@@ -45,7 +45,10 @@ const LogIn = (
         bake_cookie("lastName", lastName);
         bake_cookie("email", email);
         bake_cookie(cookie_key, true);
-        createUser(newUser);
+        const user = await userService.createUser(newUser);
+        const userId = user._id
+        console.log("userId in google login", userId)
+        bake_cookie("userID", userId);
         // setLoggedIn(true)
         // to do: Insert the user into the users table in database.
     }
@@ -112,12 +115,13 @@ const stpm = (state) => {
 
 const dtpm = (dispatch) => ({
     createUser: (user) => {
-        console.log(user)
+
         userService.createUser(user)
             .then(theUser => dispatch({
                                           type: "CREATE_USER",
                                           user: theUser
                                       }))
+
     },
     findUserByEmail: (email) => {
         userService.findUserByEmail(email)
