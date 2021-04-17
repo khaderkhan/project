@@ -8,16 +8,7 @@ import {read_cookie} from 'sfcookies';
 
 const ReviewList = (
     {
-        reviews = [
-            {
-                title: "title",
-                review: "reviewBody",
-                movieId: "movieID",
-                movieName: "movie.original_title",
-                reviewer: 'place holder',
-                reviewerId: 'place holder'
-            }
-        ],
+        reviews = [],
         createReview,
         review,
         deleteReview,
@@ -26,6 +17,9 @@ const ReviewList = (
 
     }
 ) => {
+
+
+
     const {movieID, userID} = useParams()
     const [title, setTitle] = useState('');
     const [reviewBody, setReviewBody] = useState('');
@@ -41,7 +35,7 @@ const ReviewList = (
         console.log("isLogIn is:", loggedIn)
         movieService.findMovieById(movieID).then(m => setMovie(m))
         findAllReviewsForMovie(movieID)
-    }, [movieID], isLoggedIn)
+    }, [movieID, isLoggedIn])
 
     return (
 
