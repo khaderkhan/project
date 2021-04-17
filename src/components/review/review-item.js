@@ -17,8 +17,8 @@ const ReviewItem = (
     const loggedInUserName = read_cookie("email")
     const loggedInFirstName = read_cookie("firstName")
     console.log("username is:", loggedInUserName)
-    const [userFname, setUserFname] = useState(loggedInUserName)
-    const [userLname, setUserLname] = useState(loggedInUserName)
+    const [userFname, setUserFname] = useState('')
+    const [userLname, setUserLname] = useState('')
 
     useEffect(() => {
 
@@ -49,7 +49,12 @@ const ReviewItem = (
                         <p className="card-text">{rev.review}</p>
                     </div>
                     <div className="card-footer">
-                         <small className="text-muted"> {rev.movieName}</small>
+                         <small className="text-muted">
+                         <Link to={`/details/${rev.movieId}`}>
+                         {rev.movieName}
+                          </Link>
+
+                         </small>
                          <br/>
                         <small className="text-muted">{new Date(rev.createdAt)
                             .toLocaleDateString(
