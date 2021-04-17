@@ -60,7 +60,7 @@ const ReviewItem = (
                          {loggedInUserName !== rev.reviewerId &&
                          <small className="text-muted float-right"> {`By | `}
                          <Link
-                          to={`/profile/${rev.reviewerId}`}>
+                          to={`/profile/${rev.userID}`}>
                         {rev.reviewer}
                           </Link>
                           </small>
