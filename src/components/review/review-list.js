@@ -26,6 +26,7 @@ const ReviewList = (
     const [movie, setMovie] = useState({})
     const [isLoggedIn, setLoggedIn] = useState(false);
 
+
     useEffect(() => {
 
         const loggedIn = read_cookie("loginCookie")
@@ -61,6 +62,7 @@ const ReviewList = (
                                     const lastName = read_cookie("lastName")
                                     const email = read_cookie("email")
                                     createReview(movieID, {
+                                        userID: read_cookie("userID"),
                                         title: title,
                                         review: reviewBody,
                                         movieId: movieID,

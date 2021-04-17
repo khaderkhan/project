@@ -34,7 +34,7 @@ const updateReview = (reviewId, review) =>
         .then(res => res.json())
 
 const findAllReviewsForUser = (userId) =>
-    fetch(`${BASE_URL}/${userId}`)
+    fetch(`${BASE_URL}/user/${userId}`)
         .then(res => res.json())
 
 
