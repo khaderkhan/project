@@ -3,18 +3,57 @@ import {useParams} from 'react-router-dom'
 import movieService from '../services/movies-service'
 import '../style/MovieDetails.style.css';
 import ReviewList from "./review/review-list";
+import {bake_cookie, read_cookie, delete_cookie} from 'sfcookies';
+import { Table, Tag, Space } from 'antd';
+
+
+const columns = [
+    {
+      title: 'adult',
+      dataIndex: 'adult',
+      key: 'adult',
+      render: text => <a>{JSON.stringify(text)}</a>,
+    },
+    {
+      title: 'release_date',
+      dataIndex: 'release_date',
+      key: 'release_date',
+    },
+    {
+      title: 'status',
+      dataIndex: 'status',
+      key: 'status',
+    },
+    {
+        title: 'tagline',
+        dataIndex: 'tagline',
+        key: 'tagline',
+      },
+
+  ];
+  
 
 
 
 const Details = () => {
     const [movie, setMovie] = useState({})
     const [actors, setActors] = useState([])
+    const [userType, setUserType] = useState("Reviewer")
     const {movieID} = useParams()
+    const [producerData, setProducerData] = useState([])
     // const movieID = useParams().movieID
 
     useEffect(() => {
+        setUserType(read_cookie("type"))
+        console.log("userType==>", userType)
         movieService.findMovieById(movieID)
-            .then(movie => setMovie(movie))
+            .then( movie => {
+                console.log("movieeee====>>", movie)
+                setProducerData([movie])
+                return setMovie(movie)
+            } )
+        
+       
         movieService.findActorsByMovieId(movieID)
             .then(actors =>  setActors(actors))
 
@@ -95,6 +134,14 @@ const Details = () => {
                     </div>
                 </div>
             </div>
+            {
+                userType === "Producer" && <div> 
+                        <h1 style={{alignContent: "middle"}}> 
+                            Producers only section
+                            </h1>
+                        <Table columns={columns} dataSource={producerData} pagination={false}/>
+                    </div> 
+            }
             <div className="movie-features container-fluid mt-2 ml-3">
                <h3>Cast</h3>
             </div>
