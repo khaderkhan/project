@@ -44,6 +44,8 @@ const LogIn = (
         bake_cookie("firstName", firstName);
         bake_cookie("lastName", lastName);
         bake_cookie("email", email);
+        // fetch the user type from the backend and store the user type in the cookie. 
+        // bake_cookie("type", "Reviewer"); // so when the user logs in for the first time, he would e
         bake_cookie(cookie_key, true);
         console.log("here======>>>")
         const userId = await userService.createUser(newUser);
