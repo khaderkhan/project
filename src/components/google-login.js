@@ -45,8 +45,9 @@ const LogIn = (
         bake_cookie("lastName", lastName);
         bake_cookie("email", email);
         bake_cookie(cookie_key, true);
-        const user = await userService.createUser(newUser);
-        const userId = user._id
+        console.log("here======>>>")
+        const userId = await userService.createUser(newUser);
+        console.log("userrrrr====>>>>", user)
         console.log("userId in google login", userId)
         bake_cookie("userID", userId);
         // setLoggedIn(true)
