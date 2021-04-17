@@ -4,6 +4,7 @@ import {read_cookie} from "sfcookies";
 const ReviewItem = (
     {
         rev,
+        noicons,
         deleteReview,
         updateReview
     }) => {
@@ -21,14 +22,16 @@ const ReviewItem = (
                 <div className="card shadow p-3 mb-5 bg-white rounded">
                     <div className="card-body">
                         {
-                        loggedInUserName === rev.reviewerId &&
+                        loggedInUserName === rev.reviewerId && !noicons &&
 
                             <>
-                            <i onClick={() => setEditing(true)}
-                               className="fas fa-edit float-right mt-1 ml-3"/>
+                            <i className="fas fa-edit float-right mt-1 ml-3" onClick={() => setEditing(true)}
+                               />
                             <i onClick={() => deleteReview(rev)}
                             className="fas fa-trash float-right mt-1"/>
                             </>
+
+
                         }
                         <h5 className="card-title">{rev.title}</h5>
                         <p className="card-text">{rev.review}</p>

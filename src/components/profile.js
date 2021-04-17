@@ -112,11 +112,11 @@ const Profile = () => {
                             {(reviews.reviews.length > 0) && reviews.reviews.map((rev) => {
                                                                                    return (
                                                                                        <div key={rev._id}>
-                                                                                       <ReviewItem rev={rev} />
+                                                                                       <ReviewItem rev={rev} noicons={true}/>
                                                                                        </div>
                                                                                    )
                                                                                })
-                                                                           }}
+                                                                           }
                         </div>
                     </div>
         </div>
