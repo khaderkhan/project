@@ -7,18 +7,30 @@ import ReviewItem from "./review/review-item";
 
 const Profile = () => {
 
-    const [user, setUser] = useState({firstName: read_cookie("firstName"), lastName: read_cookie("lastName")})
+    const [user, setUser] = useState({firstName: read_cookie("firstName"), lastName: read_cookie("lastName"), type:"Reviewer"})
     const [fname, setFname] = useState(read_cookie("firstName"))
     const [lname, setLname] = useState(read_cookie("lastName"))
+    const [type, setType] = useState("Reviewer")
     const [reviews, setReviews] = useState(({ reviews: [] }))
     const userID = read_cookie("userID")
 
      const handleFnameChange = (e) => {
-        setFname(e.target.value)
-    }
+        setUser({firstName: e.target.value, lastName: lname, type: type});
+        setFname(e.target.value);
+
+         }
+
 
      const handleLnameChange = (e) => {
-             setLname(e.target.value)}
+             setLname(e.target.value);
+              setUser({firstName: fname, lastName: e.target.value, type: type})
+             }
+
+    const handleTypeChange = (e) => {
+
+                 setUser({firstName: fname, lastName: lname, type: e.target.value});
+                 setType(e.target.value)
+                 }
 
      useEffect(() => {
             console.log("in useEffect")
@@ -43,7 +55,7 @@ const Profile = () => {
                             <input class="form-control wbdv-field wbdv-fname"
                                    onChange={(e) => handleFnameChange(e)}
                                    id="fname"
-                                   value={user.firstName}/>
+                                   value={fname}/>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -53,7 +65,7 @@ const Profile = () => {
                             <input class="form-control wbdv-field wbdv-lname"
                                    onChange={(e) => handleLnameChange(e)}
                                    id="username"
-                                   value={user.lastName}/>
+                                   value={lname}/>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -68,12 +80,14 @@ const Profile = () => {
                         </div>
                     </div>
                      <div class="form-group row">
-                        <label for="role" class="col-sm-2 col-form-label">
-                            Role </label>
+                        <label for="type" class="col-sm-2 col-form-label">
+                            Type </label>
                         <div class="col-sm-4">
-                            <select class="custom-select" id="role">
+                            <select class="custom-select" id="type" value={type} onChange={(e) => handleTypeChange(e)}>
+
                                 <option value="Producer">Producer</option>
                                 <option value="Reviewer">Reviewer</option>
+                                <option value="admin">Admin</option>
                             </select>
                         </div>
                     </div>
@@ -81,7 +95,13 @@ const Profile = () => {
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label"></label>
                         <div class="col-sm-6">
-                        <input type="button" class="btn btn-success btn-block" onClick={() => {userService.updateUser(userID, user); console.log("updated user")}} value="Update" />
+                        <input type="button" class="btn btn-success btn-block"
+                        onClick={() => {
+                         setUser({firstName: fname, lastName: lname, type: user.type});
+                        userService.updateUser(userID, user);
+                        bake_cookie("type", type);
+
+                        console.log("updated user", user, type)}} value="Update" />
                         </div>
                     </div>
                 </form>
