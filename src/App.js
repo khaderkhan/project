@@ -41,7 +41,7 @@ function App() {
                 </Route>
                 <Route
                     exact={true}
-                    path={["/profile/:profileId"]}>
+                    path={["/profile/:userID"]}>
                     <StaticProfile/>
                 </Route>
 

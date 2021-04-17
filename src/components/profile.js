@@ -46,7 +46,7 @@ const Profile = () => {
 
     return(
         <div class="container">
-            <h1>Profile</h1>
+            <h1>My Profile</h1>
                 <form>
                     <div class="form-group row">
                         <label for="username" class="col-sm-2 col-form-label">
