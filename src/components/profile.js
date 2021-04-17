@@ -7,7 +7,8 @@ import ReviewItem from "./review/review-item";
 
 const Profile = () => {
 
-    const [user, setUser] = useState({firstName: read_cookie("firstName"), lastName: read_cookie("lastName"), type:"Reviewer"})
+    const [user, setUser] = useState({firstName: read_cookie("firstName"), lastName: read_cookie("lastName"), type:"Reviewer",
+                                        userID: read_cookie("userID")})
     const [fname, setFname] = useState(read_cookie("firstName"))
     const [lname, setLname] = useState(read_cookie("lastName"))
     const [type, setType] = useState("Reviewer")
@@ -15,7 +16,7 @@ const Profile = () => {
     const userID = read_cookie("userID")
 
      const handleFnameChange = (e) => {
-        setUser({firstName: e.target.value, lastName: lname, type: type});
+        setUser({firstName: e.target.value, lastName: lname, type: type, userID: userID});
         setFname(e.target.value);
 
          }
@@ -23,12 +24,12 @@ const Profile = () => {
 
      const handleLnameChange = (e) => {
              setLname(e.target.value);
-              setUser({firstName: fname, lastName: e.target.value, type: type})
+              setUser({firstName: fname, lastName: e.target.value, type: type, userID: userID})
              }
 
     const handleTypeChange = (e) => {
 
-                 setUser({firstName: fname, lastName: lname, type: e.target.value});
+                 setUser({firstName: fname, lastName: lname, type: e.target.value, userID: userID});
                  setType(e.target.value)
                  }
 
@@ -97,8 +98,10 @@ const Profile = () => {
                         <div class="col-sm-6">
                         <input type="button" class="btn btn-success btn-block"
                         onClick={() => {
-                         setUser({firstName: fname, lastName: lname, type: user.type});
-                        userService.updateUser(userID, user);
+                         setUser({firstName: fname, lastName: lname, type: user.type, userID: userID});
+                        userService.updateUser(user);
+                        bake_cookie("firstName", fname);
+                        bake_cookie("lastName", lname);
                         bake_cookie("type", type);
 
                         console.log("updated user", user, type)}} value="Update" />
@@ -124,7 +127,3 @@ const Profile = () => {
 }
 
 export default Profile;
-
-// add to the on click by actually updating the role, db
-//                         then need to fetch reviews
-//                         then need static profile page

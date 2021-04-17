@@ -1,6 +1,7 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import {read_cookie} from "sfcookies";
 import {Link, useParams} from "react-router-dom";
+import userService from '../../services/user-service'
 
 const ReviewItem = (
     {
@@ -12,9 +13,19 @@ const ReviewItem = (
     const [editing, setEditing] = useState(false)
     const [cachedItem, setCachedItem] = useState(rev)
 
+
     const loggedInUserName = read_cookie("email")
     const loggedInFirstName = read_cookie("firstName")
     console.log("username is:", loggedInUserName)
+    const [userFname, setUserFname] = useState(loggedInUserName)
+    const [userLname, setUserLname] = useState(loggedInUserName)
+
+    useEffect(() => {
+
+                 rev.userID && userService.findUserById(rev.userID)
+                     .then(user => {setUserFname(user.firstName); setUserLname(user.lastName)})
+
+             }, [])
 
     return (
         <>
@@ -48,29 +59,46 @@ const ReviewItem = (
                         </small>
 
 
-                        {loggedInUserName === rev.reviewerId &&
-                        <small className="text-muted float-right"> {`By | `}
+                        {!rev.userID &&
+                                                <small className="text-muted float-right"> {`By | `}
+                                                <Link to={`/profile`}>
+                                                {rev.reviewer}
+                                                 </Link>
+                                                 </small>
+                                                 }
+
+                        {rev.userID && loggedInUserName === rev.reviewerId &&
+                        !noicons &&
+                        <small className="text-muted float-right">
+                        {`By | `}
                         <Link to={`/profile`}>
-                        {rev.reviewer}
+                        {userFname} {userLname}
                          </Link>
+
                          </small>
                          }
 
 
-                         {loggedInUserName !== rev.reviewerId &&
-                         <small className="text-muted float-right"> {`By | `}
+
+                         {rev.userID && loggedInUserName !== rev.reviewerId &&
+                         !noicons &&
+                         <small className="text-muted float-right">
+
+                         {`By | `}
                          <Link
                           to={`/profile/${rev.userID}`}>
-                        {rev.reviewer}
+
+                        {userFname} {userLname}
                           </Link>
                           </small>
+                          }
 
 
 
 
 
 
-                        }
+
                     </div>
                 </div>
             }

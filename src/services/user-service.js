@@ -20,7 +20,7 @@ const findUserById = (userID) =>
     fetch(`${USER_URL}/${userID}`)
         .then(res => res.json())
 
-const updateUser = (userId, user) =>
+const updateUser = (user) =>
     fetch(`${USER_URL}`,{
         method: 'PUT',
         body: JSON.stringify(user),
