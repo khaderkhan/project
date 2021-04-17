@@ -46,13 +46,31 @@ const ReviewItem = (
                                     hour: 'numeric', minute: 'numeric', hour12: true
                                 })}
                         </small>
-                        <br/>
-                        <small className="text-muted float-right"> By | {
-                        <Link
-                                                        to={`/profile/${rev.userID}`}>
-                        {loggedInFirstName}
+
+
+                        {loggedInUserName === rev.reviewerId &&
+                        <small className="text-muted float-right"> {`By | `}
+                        <Link to={`/profile`}>
+                        {rev.reviewer}
                          </Link>
-                        }</small>
+                         </small>
+                         }
+
+
+                         {loggedInUserName !== rev.reviewerId &&
+                         <small className="text-muted float-right"> {`By | `}
+                         <Link
+                          to={`/profile/${rev.reviewerId}`}>
+                        {rev.reviewer}
+                          </Link>
+                          </small>
+
+
+
+
+
+
+                        }
                     </div>
                 </div>
             }
