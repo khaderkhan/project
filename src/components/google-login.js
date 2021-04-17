@@ -45,6 +45,7 @@ const LogIn = (
         bake_cookie("lastName", lastName);
         bake_cookie("email", email);
         bake_cookie(cookie_key, true);
+        createUser(newUser);
         // setLoggedIn(true)
         // to do: Insert the user into the users table in database.
     }
@@ -53,17 +54,16 @@ const LogIn = (
     }
 
     useEffect(() => {
-        console.log("useEffect has called and loggedIn is:", isLoggedIn)
-        console.log("from useEffect user is:", newUser)
-        if (!findUserByEmail(newUser.email)) {
-            createUser(newUser);
-        }
+
         const loggedIn = read_cookie("loginCookie")
         if (loggedIn === true) {
             setLoggedIn(loggedIn)
         }
+        console.log("loggedIn is:", isLoggedIn)
 
-    }, [responseGoogleSuccess, responseGoogleFailure])
+    }, [isLoggedIn])
+
+
     const deleteCookies = () => {
         console.log("deleteCookies has been called")
         delete_cookie("firstName")
