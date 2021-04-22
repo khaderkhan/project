@@ -5,6 +5,23 @@ import reviewService from '../../services/review-service'
 import ReviewItem from "./review-item";
 import movieService from "../../services/movies-service"
 import {read_cookie} from 'sfcookies';
+import { Comment, Avatar } from 'antd';
+import { Card, Button } from 'react-bootstrap';
+
+
+
+
+// const cardComponent = (
+//     {
+//         title,
+//         text
+//     }) => {
+//     return (
+        
+//     )
+// }
+
+
 
 const ReviewList = (
     {
@@ -77,12 +94,30 @@ const ReviewList = (
                             </div>
                         </div>
             }
-            <div className="card-columns">
+            <div className="row">
                 {
                     reviews.map((rev) => {
                         return (
                             <div key={rev._id}>
-                            <ReviewItem rev={rev} deleteReview={deleteReview} updateReview={updateReview}/>
+
+                            <Card style={{ width: '18rem' }}>
+                                    <Card.Img variant="top" src="holder.js/100px180" />
+                                    <Card.Body>
+                                        <Card.Title>{rev.title}</Card.Title>
+                                        <Card.Text>
+                                        {rev.review}
+                                        </Card.Text>
+                                        <Button variant="primary">Go somewhere</Button>
+                                    </Card.Body>
+                                    </Card>
+                                {/* <cardComponent text={rev.review} title={rev.title}/> */}
+                            {/* <ReviewItem rev={rev} deleteReview={deleteReview} updateReview={updateReview}/> */}
+                            {/* <ExampleComment text = {rev}>
+                               {
+                                   rev.hasComment && <ExampleComment />
+                               } 
+                            </ExampleComment> */}
+                            
                             </div>
                         )
                     })
