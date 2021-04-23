@@ -2,6 +2,25 @@ import React, {useState, useEffect} from 'react'
 import {read_cookie} from "sfcookies";
 import {Link, useParams} from "react-router-dom";
 import userService from '../../services/user-service'
+import { Form, Input, InputNumber, Button } from 'antd';
+import commentService from "../../services/comment-service"
+import { Divider } from 'antd';
+
+
+const layout = {
+    labelCol: {
+      span: 8,
+    },
+    wrapperCol: {
+      span: 16,
+    },
+  };
+  /* eslint-disable no-template-curly-in-string */
+  
+  const validateMessages = {
+    required: '${label} is required!',
+  };
+
 
 const ReviewItem = (
     {
@@ -19,6 +38,9 @@ const ReviewItem = (
     console.log("username is:", loggedInUserName)
     const [userFname, setUserFname] = useState('')
     const [userLname, setUserLname] = useState('')
+    const [comment, setComment] = useState('')
+    
+    
 
     useEffect(() => {
 
@@ -26,6 +48,26 @@ const ReviewItem = (
                      .then(user => {setUserFname(user.firstName); setUserLname(user.lastName)})
 
              }, [])
+    
+    const onFinish = (values) => {
+        console.log("values===========>>>", values, values.comment, rev._id, rev);
+        const commentObj = {
+            reviewId: rev._id,
+            comment: values.comment,
+            userId: rev.userID,
+            movieId: rev.movieId
+        }
+        commentService.createComment(commentObj).then( res => {
+            console.log("coming innn", res)
+            setComment(values.comment)
+            console.log("comment here====>>>", comment, typeof comment, comment.length)
+        })
+       
+        
+        // Invoke the comment service code that will send the comment to the backend. 
+        // Save the comment in a state variable. 
+        // Hide the form and display the comment. 
+    };
 
     return (
         <>
@@ -47,6 +89,33 @@ const ReviewItem = (
                         }
                         <h5 className="card-title">{rev.title}</h5>
                         <p className="card-text">{rev.review}</p>
+                        <Divider />
+                        {
+                        
+                        rev.comment.length == 0 &&
+                        <>
+                        
+                            <Form {...layout} name="nest-messages" onFinish={onFinish} validateMessages={validateMessages}>
+                                <Form.Item name='comment' label="comment" rules={[{ required: true }]}>
+                                    <Input.TextArea />
+                                </Form.Item>
+                                <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
+                                    <Button type="primary" htmlType="submit">
+                                    Comment
+                                    </Button>
+                                </Form.Item>
+                            </Form>
+                        </>
+                        }
+                        {
+                            rev.comment.length != 0 &&
+                            <>
+                                <h4>Comment</h4>
+                                <p>
+                                 {rev.comment[0].comment}
+                                </p>
+                            </>
+                        }
                     </div>
                     <div className="card-footer">
                          <small className="text-muted">
