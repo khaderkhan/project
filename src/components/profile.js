@@ -61,6 +61,8 @@ const Profile = () => {
                  .then(user => setUser(user))
              reviewService.findAllReviewsForUser(userID).then(
              response => {console.log('fr', response); setReviews(response)})
+             setFname(user.firstName)
+             setLname(user.lastName)
 
          }, [])
 
