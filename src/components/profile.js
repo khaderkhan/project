@@ -141,7 +141,20 @@ const Profile = () => {
                            }
                         </div>
                         <div class="col-4">
-                            <h2>Your Comments</h2>
+                            <h2>You Commented...</h2>
+                            {reviews.reviews && (reviews.reviews.length > 0) && reviews.reviews.map((rev) => {
+                                if (rev.comment.length != 0) {
+                                return (
+                                        <p>
+                                         <i>"{rev.comment[0].comment}"</i> ~ on {rev.title}
+                                        </p>
+                                 )
+                                }
+
+
+
+                           })
+                           }
 
                         </div>
                     </div>
