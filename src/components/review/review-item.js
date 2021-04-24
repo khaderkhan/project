@@ -35,6 +35,7 @@ const ReviewItem = (
 
     const loggedInUserName = read_cookie("email")
     const loggedInFirstName = read_cookie("firstName")
+    const type = read_cookie("type")
     console.log("username is:", loggedInUserName)
     const [userFname, setUserFname] = useState('')
     const [userLname, setUserLname] = useState('')
@@ -77,7 +78,7 @@ const ReviewItem = (
                 <div className="card shadow p-3 mb-5 bg-white rounded">
                     <div className="card-body">
                         {
-                        loggedInUserName === rev.reviewerId && !noicons &&
+                        ((loggedInUserName === rev.reviewerId && !noicons) || type == "admin") &&
 
                             <>
                             <i className="fas fa-edit float-right mt-1 ml-3" onClick={() => setEditing(true)}
@@ -109,7 +110,7 @@ const ReviewItem = (
                         </>
                         }
                         {
-                            rev.comment.length != 0 &&
+                            rev.comment.length != 0 && !noicons &&
                             <>
                                 <h4>Comment</h4>
                                 <p>

@@ -8,32 +8,22 @@ import ReviewItem from "./review/review-item";
 const Profile = () => {
 
     const [user, setUser] = useState({firstName: read_cookie("firstName"), lastName: read_cookie("lastName"),
-                                        userID: read_cookie("userID")})
+                                        userID: read_cookie("userID"), type: read_cookie("type")})
     const [fname, setFname] = useState(read_cookie("firstName"))
     const [lname, setLname] = useState(read_cookie("lastName"))
     const [type, setType] = useState(user.type)
-    const [origType, setOrigType] = useState(user.type)
     const [reviews, setReviews] = useState(({ reviews: [] }))
     const userID = read_cookie("userID")
 
-    const handleInvalidChange = () => {
-
-        if (origType == "Reviewer" && user.type == "admin") {
-            alert("Cannot change from reviewer to admin");
-        }
-        else {
-
-            !(origType == "Reviewer" && user.type == "admin") &&
+    const updateValues = () => {
             setUser({firstName: fname, lastName: lname, type: user.type, userID: userID});
             userService.updateUser(user);
             bake_cookie("firstName", fname);
             bake_cookie("lastName", lname);
             bake_cookie("type", type);
-            setOrigType(user.type);
 
             console.log("updated user", user, type)
-            }
-            console.log("orig", origType)
+
             console.log("type", user.type)
             console.log("type2", type)
             }
@@ -54,9 +44,13 @@ const Profile = () => {
              }
 
     const handleTypeChange = (e) => {
-
+                if (user.type == "Reviewer" && e.target.value == "admin") {
+                            alert("Cannot change from reviewer to admin");
+                        }
+                 else {
                  setUser({firstName: fname, lastName: lname, type: e.target.value, userID: userID});
                  setType(e.target.value)
+                 }
                  }
 
      useEffect(() => {
@@ -110,7 +104,7 @@ const Profile = () => {
                         <label for="type" class="col-sm-2 col-form-label">
                             Type </label>
                         <div class="col-sm-4">
-                            <select class="custom-select" id="type" value={origType} onChange={(e) => handleTypeChange(e)}>
+                            <select class="custom-select" id="type" value={user.type} onChange={(e) => handleTypeChange(e)}>
 
                                 <option value="Producer">Producer</option>
                                 <option value="Reviewer">Reviewer</option>
@@ -123,7 +117,7 @@ const Profile = () => {
                         <label class="col-sm-2 col-form-label"></label>
                         <div class="col-sm-6">
                         <input type="button" class="btn btn-success btn-block"
-                        onClick={() => {handleInvalidChange()}} value="Update" />
+                        onClick={() => {updateValues()}} value="Update" />
                         </div>
                     </div>
                 </form>
@@ -146,13 +140,10 @@ const Profile = () => {
                                 if (rev.comment.length != 0) {
                                 return (
                                         <p>
-                                         <i>"{rev.comment[0].comment}"</i> ~ on {rev.title}
+                                         <i>"{rev.comment[0].comment}"</i> ~ on <b>{rev.title}</b>
                                         </p>
                                  )
                                 }
-
-
-
                            })
                            }
 
@@ -163,9 +154,3 @@ const Profile = () => {
 }
 
 export default Profile;
-
-//"607a6ad05af58d4cdc14ec94", userID: "607a490b69b67747257d38c1", title: "Review Eshwari 23334", …}
-//1: {createdAt: "2021-04-17T05:00:12.532Z", comment: Array(0), _id: "607a6b73077bc64cf5866739", userID: "607a490b69b67747257d38c1", title: "asdfasdf", …}
-//2: {createdAt: "2021-04-17T05:00:12.532Z", comment: Array(0), _id: "607a6b81077bc64cf586673a", userID: "607a490b69b67747257d38c1", title: "asdfasdf", …}
-//3: {createdAt: "2021-04-17T06:29:11.223Z", comment: Array(0), _id: "607a8070748ff5521ba28698", userID: "607a490b69b67747257d38c1", title: "eshwari review asdfasd", …}
-//4: {createdAt: "2021-04-17T19:34:59.120Z", comment: Array(0), _id: "607b3b4a38fa145e56934e3d"
