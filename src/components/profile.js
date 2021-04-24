@@ -64,6 +64,14 @@ const Profile = () => {
 
          }, [])
 
+    if (userID.length == 0) {
+    return (
+     <div class="container">
+    <h1>Please log in to view your profile</h1>
+    </div>
+    )
+    }
+    else {
 
     return(
         <div class="container">
@@ -123,7 +131,7 @@ const Profile = () => {
                 </form>
                 <br/>
                 <div class="row">
-                        <div class="col-4">
+                        <div class="col-sm-4">
                             <h2>Your Reviews</h2>
                             {reviews.reviews && (reviews.reviews.length > 0) && reviews.reviews.map((rev) => {
                                    return (
@@ -134,7 +142,7 @@ const Profile = () => {
                                })
                            }
                         </div>
-                        <div class="col-4">
+                        <div class="col-sm-4">
                             <h2>You Commented...</h2>
                             {reviews.reviews && (reviews.reviews.length > 0) && reviews.reviews.map((rev) => {
                                 if (rev.comment.length != 0) {
@@ -150,7 +158,10 @@ const Profile = () => {
                         </div>
                     </div>
         </div>
+
+
     )
+    }
 }
 
 export default Profile;
