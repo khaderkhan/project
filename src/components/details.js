@@ -57,6 +57,7 @@ const Details = () => {
         movieService.findActorsByMovieId(movieID)
             .then(actors =>  setActors(actors))
 
+
     }, [movieID])
 
     

@@ -36,6 +36,7 @@ const ReviewList = (
         console.log("isLogIn is:", loggedIn)
         movieService.findMovieById(movieID).then(m => setMovie(m))
         findAllReviewsForMovie(movieID)
+        console.log('revs', reviews)
     }, [movieID, isLoggedIn])
 
     return (

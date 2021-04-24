@@ -61,9 +61,10 @@ const ReviewItem = (
             console.log("coming innn", res)
             setComment(values.comment)
             console.log("comment here====>>>", comment, typeof comment, comment.length)
-        })
+        }
+        )
        
-        
+
         // Invoke the comment service code that will send the comment to the backend. 
         // Save the comment in a state variable. 
         // Hide the form and display the comment. 
@@ -92,7 +93,7 @@ const ReviewItem = (
                         <Divider />
                         {
                         
-                        rev.comment.length == 0 &&
+                        rev.comment.length == 0 && !noicons &&
                         <>
                         
                             <Form {...layout} name="nest-messages" onFinish={onFinish} validateMessages={validateMessages}>
@@ -136,7 +137,7 @@ const ReviewItem = (
                         {!rev.userID &&
                                                 <small className="text-muted float-right"> {`By | `}
                                                 <Link to={`/profile`}>
-                                                {rev.reviewer}
+                                                {'Unknown user'}
                                                  </Link>
                                                  </small>
                                                  }
@@ -166,12 +167,6 @@ const ReviewItem = (
                           </Link>
                           </small>
                           }
-
-
-
-
-
-
 
                     </div>
                 </div>
