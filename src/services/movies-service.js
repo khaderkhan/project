@@ -14,9 +14,25 @@ export const findActorsByMovieId = (movieId) =>
     fetch(`${MOVIE_URL}/movie/${movieId}/credits?${API_KEY}`)
         .then(response => response.json())
 
+export const findPopularMovies = () =>
+    fetch(`${MOVIE_URL}/discover/movie?sort_by=popularity.desc&${API_KEY}`)
+        .then(response => response.json())
+
+export const findNowPlayingMovies = () =>
+    fetch(`${MOVIE_URL}/movie/now_playing?${API_KEY}`)
+        .then(response => response.json())
+
+export const findUpcomingMovies = () =>
+    fetch(`${MOVIE_URL}/movie/upcoming?${API_KEY}`)
+        .then(response => response.json())
+
+
 export default {
     findMovieByTitle,
     findMovieById,
-    findActorsByMovieId
+    findActorsByMovieId,
+    findPopularMovies,
+    findNowPlayingMovies,
+    findUpcomingMovies
 }
 
