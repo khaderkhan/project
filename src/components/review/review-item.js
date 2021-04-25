@@ -35,7 +35,7 @@ const ReviewItem = (
 
     const loggedInUserName = read_cookie("email")
     const loggedInFirstName = read_cookie("firstName")
-    const type = read_cookie("type")
+    console.log("username is:", loggedInUserName)
     const [userFname, setUserFname] = useState('')
     const [userLname, setUserLname] = useState('')
     const [comment, setComment] = useState('')
@@ -50,7 +50,6 @@ const ReviewItem = (
              }, [])
     
     const onFinish = (values) => {
-        console.log("values===========>>>", values, values.comment, rev._id, rev);
         const commentObj = {
             reviewId: rev._id,
             comment: values.comment,
@@ -58,13 +57,10 @@ const ReviewItem = (
             movieId: rev.movieId
         }
         commentService.createComment(commentObj).then( res => {
-            console.log("coming innn", res)
             setComment(values.comment)
-            console.log("comment here====>>>", comment, typeof comment, comment.length)
-        }
-        )
+        })
        
-
+        
         // Invoke the comment service code that will send the comment to the backend. 
         // Save the comment in a state variable. 
         // Hide the form and display the comment. 
@@ -77,7 +73,7 @@ const ReviewItem = (
                 <div className="card shadow p-3 mb-5 bg-white rounded">
                     <div className="card-body">
                         {
-                        ((loggedInUserName === rev.reviewerId && !noicons) || type == "admin") &&
+                        loggedInUserName === rev.reviewerId && !noicons &&
 
                             <>
                             <i className="fas fa-edit float-right mt-1 ml-3" onClick={() => setEditing(true)}
@@ -91,8 +87,9 @@ const ReviewItem = (
                         <h5 className="card-title">{rev.title}</h5>
                         <p className="card-text">{rev.review}</p>
                         <Divider />
-
-                        rev.comment.length == 0 && !noicons &&
+                        {
+                        
+                        rev.comment.length == 0 &&
                         <>
                         
                             <Form {...layout} name="nest-messages" onFinish={onFinish} validateMessages={validateMessages}>
@@ -108,7 +105,7 @@ const ReviewItem = (
                         </>
                         }
                         {
-                            rev.comment.length != 0 && !noicons &&
+                            rev.comment.length != 0 &&
                             <>
                                 <h4>Comment</h4>
                                 <p>
@@ -136,7 +133,7 @@ const ReviewItem = (
                         {!rev.userID &&
                                                 <small className="text-muted float-right"> {`By | `}
                                                 <Link to={`/profile`}>
-                                                {'Unknown user'}
+                                                {rev.reviewer}
                                                  </Link>
                                                  </small>
                                                  }
@@ -166,6 +163,12 @@ const ReviewItem = (
                           </Link>
                           </small>
                           }
+
+
+
+
+
+
 
                     </div>
                 </div>
