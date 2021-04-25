@@ -64,7 +64,7 @@ const StaticProfile = () => {
             <h1 className="float-left">{user.firstName} {user.lastName}'s Profile</h1>
             {
                 isAlreadyFollowed(userID) &&
-                <button className="btn btn-primary mr-2 ml-2 mb-2 mt-2 float-right"
+                <button className="btn btn-danger mr-2 ml-2 mb-2 mt-2 float-right"
                         onClick={unFollow}>
                     Unfollow {user.firstName} -
                 </button>
