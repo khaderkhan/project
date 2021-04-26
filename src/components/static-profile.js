@@ -78,7 +78,7 @@ const StaticProfile = () => {
             <br/>
             <br/>
             <div className="row">
-                <div className="col-4-sm ant-card-contain-tabs">
+                <div className="col-sm-4 ant-card-contain-tabs">
                     <h2>Reviews by {user.firstName}</h2>
                     {reviews.reviews && (reviews.reviews.length > 0) && reviews.reviews.map((rev) => {
                             return (
