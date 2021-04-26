@@ -90,6 +90,21 @@ const StaticProfile = () => {
                         })
                     }
                 </div>
+                <div className="col-4">
+                    <h2>{user.firstName} Commented...</h2>
+                    {reviews.reviews && (reviews.reviews.length > 0) && reviews.reviews.map(
+                        (rev) => {
+                            if (rev.comment.length !== 0) {
+                                return (
+                                    <p>
+                                        <i>"{rev.comment[0].comment}"</i> ~ on <b>{rev.title}</b>
+                                    </p>
+                                )
+                            }
+                        })
+                    }
+
+                </div>
                 <div className="col-6">
                     <h2>{user.firstName} Follows</h2>
                     <ul className="list-group">
