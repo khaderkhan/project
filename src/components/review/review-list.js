@@ -33,7 +33,6 @@ const ReviewList = (
         if (loggedIn === true) {
             setLoggedIn(loggedIn)
         }
-        console.log("isLogIn is:", loggedIn)
         movieService.findMovieById(movieID).then(m => setMovie(m))
         findAllReviewsForMovie(movieID)
     }, [movieID, isLoggedIn])
@@ -43,9 +42,8 @@ const ReviewList = (
         <div>
             {
                 isLoggedIn &&
-
                         <div className="row">
-                            <div className="col-md-4">
+                            <div className="col-md-4 mb-5 mt-3">
                                 <h4>Post a review</h4>
                                 <label htmlFor="reviewTitle">Title</label>
                                 <input className="form-control"
@@ -77,7 +75,7 @@ const ReviewList = (
                             </div>
                         </div>
             }
-            <div className="card-columns">
+            <div className="ant-card-contain-tabs">
                 {
                     reviews.map((rev) => {
                         return (

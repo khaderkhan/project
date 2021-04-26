@@ -1,7 +1,7 @@
 import {GoogleLogin} from 'react-google-login';
 import {bake_cookie, read_cookie, delete_cookie} from 'sfcookies';
 import userService from '../services/user-service'
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useState, useRef} from "react";
 import {connect} from 'react-redux'
 import {Button, Form, Navbar} from "react-bootstrap";
 import {Link} from "react-router-dom";
@@ -45,11 +45,10 @@ const LogIn = (
         bake_cookie("lastName", lastName);
         bake_cookie("email", email);
         // fetch the user type from the backend and store the user type in the cookie. 
-        // bake_cookie("type", "Reviewer"); // so when the user logs in for the first time, he would e
+        // bake_cookie("type", "Reviewer"); // so when the user logs in for the first time, he
+        // would e
         bake_cookie(cookie_key, true);
-        console.log("here======>>>")
         const userId = await userService.createUser(newUser);
-        console.log("userId in google login", userId)
         bake_cookie("userID", userId);
         // setLoggedIn(true)
         // to do: Insert the user into the users table in database.
@@ -59,16 +58,14 @@ const LogIn = (
     }
 
     useEffect(() => {
-
+        console.log('useEffect in google-login')
         const loggedIn = read_cookie("loginCookie")
         if (loggedIn === true) {
             setLoggedIn(loggedIn)
         }
-        console.log("loggedIn is:", isLoggedIn)
 
     }, [isLoggedIn])
-
-
+    
     const deleteCookies = () => {
         console.log("deleteCookies has been called")
         delete_cookie("firstName")

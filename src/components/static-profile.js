@@ -18,13 +18,11 @@ const StaticProfile = () => {
     const [followedFans, setFollowedFans] = useState([])
     const [follow, setFollow] = useState([])
 
-
     useEffect(() => {
         userService.findUserById(userID)
             .then(user => setUser(user))
         reviewService.findAllReviewsForUser(userID).then(
             response => {
-                console.log('fr', response);
                 setReviews(response)
             })
 
@@ -37,7 +35,6 @@ const StaticProfile = () => {
 
         followerService.findAllFollowers(loggedInUserId)
             .then(follow => setFollow(follow))
-
 
     }, [])
 
@@ -53,13 +50,13 @@ const StaticProfile = () => {
 
     const isAlreadyFollowed = (fanId) => {
         const returnValue = follow.find(fan => fan._id === fanId)
-        console.log('returnValue is::::',returnValue !== undefined)
+        console.log('returnValue is::::', returnValue !== undefined)
         return returnValue !== undefined;
 
     }
     return (
 
-        <div className="container">
+        <div className="ml-5">
 
             <h1 className="float-left">{user.firstName} {user.lastName}'s Profile</h1>
             {
@@ -81,26 +78,27 @@ const StaticProfile = () => {
             <br/>
             <br/>
             <div className="row">
-                <div className="col-4">
+                <div className="col-6 ant-card-contain-tabs">
                     <h2>Reviews by {user.firstName}</h2>
-                    {reviews.reviews.map((rev) => {
-                        return (
-                            <div key={rev._id}>
-                                <ReviewItem rev={rev} noicons={true}/>
-                            </div>
-                        )
-                    })
+                    {
+                        reviews.reviews.map((rev) => {
+                            return (
+                                <div key={rev._id}>
+                                    <ReviewItem rev={rev} noicons={true}/>
+                                </div>
+                            )
+                        })
                     }
                 </div>
-                <div className="col-4">
+                <div className="col-6">
                     <h2>{user.firstName} Follows</h2>
                     <ul className="list-group">
                         {
                             followedFans.map((fan, index) => {
-                                return(
+                                return (
                                     <li className="list-group-item" key={index}>
                                         <Link to={`/profile/${fan._id}`}>
-                                        {fan.firstName} {fan.lastName}
+                                            {fan.firstName} {fan.lastName}
                                         </Link>
                                     </li>
                                 )

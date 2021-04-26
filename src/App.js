@@ -1,7 +1,7 @@
 import Search from "./components/search";
 import Details from "./components/details";
 import {BrowserRouter, Route} from "react-router-dom";
-import Home from "./components/Home";
+import Home from "./components/home-page/Home";
 import Header from "./components/Header";
 import Login from "./components/login";
 import Register from "./components/register";
@@ -11,6 +11,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import {createStore} from "redux";
 import reducers from "./reducers/combine-reducers";
 import {Provider} from "react-redux";
+import Trailer from "./components/trailer";
 
 function App() {
 
@@ -24,6 +25,11 @@ function App() {
                         <Header/>
                     </Route>
                 </div>
+                <Route
+                    exact={true}
+                    path="/">
+                    <Home/>
+                </Route>
                 <Route
                     exact={true}
                     path={["/search", "/search/:title"]}>
@@ -43,6 +49,11 @@ function App() {
                     exact={true}
                     path={["/profile/:userID"]}>
                     <StaticProfile/>
+                </Route>
+                <Route
+                    exact={true}
+                    path={["/trailer/:movieID"]}>
+                    <Trailer/>
                 </Route>
 
             </BrowserRouter>

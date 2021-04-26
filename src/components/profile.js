@@ -52,7 +52,6 @@ const Profile = () => {
             .then(user => setUser(user))
         reviewService.findAllReviewsForUser(userID).then(
             response => {
-                console.log('fr', response);
                 setReviews(response)
             })
         followerService.findAllFollowers(userID)
@@ -61,34 +60,34 @@ const Profile = () => {
     }, [])
 
     return (
-        <div class="container">
+        <div className="ml-5">
             <h1>My Profile</h1>
             <form>
-                <div class="form-group row">
-                    <label for="username" class="col-sm-2 col-form-label">
+                <div className="form-group row">
+                    <label htmlFor="username" className="col-sm-2 col-form-label">
                         First Name </label>
-                    <div class="col-sm-4">
-                        <input class="form-control wbdv-field wbdv-fname"
+                    <div className="col-sm-4">
+                        <input className="form-control wbdv-field wbdv-fname"
                                onChange={(e) => handleFnameChange(e)}
                                id="fname"
                                value={fname}/>
                     </div>
                 </div>
-                <div class="form-group row">
-                    <label for="username" class="col-sm-2 col-form-label">
+                <div className="form-group row">
+                    <label htmlFor="username" className="col-sm-2 col-form-label">
                         Last Name </label>
-                    <div class="col-sm-4">
-                        <input class="form-control wbdv-field wbdv-lname"
+                    <div className="col-sm-4">
+                        <input className="form-control wbdv-field wbdv-lname"
                                onChange={(e) => handleLnameChange(e)}
                                id="username"
                                value={lname}/>
                     </div>
                 </div>
-                <div class="form-group row">
-                    <label for="email" class="col-sm-2 col-form-label">
+                <div className="form-group row">
+                    <label htmlFor="email" className="col-sm-2 col-form-label">
                         Email </label>
-                    <div class="col-sm-4">
-                        <input class="form-control wbdv-field email"
+                    <div className="col-sm-4">
+                        <input className="form-control wbdv-field email"
                                type="email"
                                id="email"
                                readonly
@@ -96,7 +95,7 @@ const Profile = () => {
                     </div>
                 </div>
                 <div className="form-group row">
-                    <label for="type" className="col-sm-2 col-form-label">
+                    <label htmlFor="type" className="col-sm-2 col-form-label">
                         Type </label>
                     <div className="col-sm-4">
                         <select className="custom-select" id="type" value={user.type}
@@ -111,8 +110,8 @@ const Profile = () => {
 
                 <div className="form-group row">
                     <label className="col-sm-2 col-form-label"/>
-                    <div className="col-sm-6">
-                        <input type="button" class="btn btn-success btn-block"
+                    <div className="col-sm-4">
+                        <input type="button" className="btn btn-success btn-block"
                                onClick={() => {
                                    updateValues()
                                }} value="Update"/>
@@ -137,7 +136,7 @@ const Profile = () => {
                     <h2>You Commented...</h2>
                     {reviews.reviews && (reviews.reviews.length > 0) && reviews.reviews.map(
                         (rev) => {
-                            if (rev.comment.length != 0) {
+                            if (rev.comment.length !== 0) {
                                 return (
                                     <p>
                                         <i>"{rev.comment[0].comment}"</i> ~ on <b>{rev.title}</b>

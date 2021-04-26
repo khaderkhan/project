@@ -89,7 +89,7 @@ const ReviewItem = (
                         <Divider />
                         {
                         
-                        rev.comment.length == 0 &&
+                        rev.comment.length === 0 &&
                         <>
                         
                             <Form {...layout} name="nest-messages" onFinish={onFinish} validateMessages={validateMessages}>
@@ -105,7 +105,7 @@ const ReviewItem = (
                         </>
                         }
                         {
-                            rev.comment.length != 0 &&
+                            rev.comment.length !== 0 &&
                             <>
                                 <h4>Comment</h4>
                                 <p>

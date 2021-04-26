@@ -25,6 +25,9 @@ export const findNowPlayingMovies = () =>
 export const findUpcomingMovies = () =>
     fetch(`${MOVIE_URL}/movie/upcoming?${API_KEY}`)
         .then(response => response.json())
+export const findVideosForMovie = (movieId) =>
+    fetch(`${MOVIE_URL}/movie/${movieId}/videos?${API_KEY}`)
+        .then(response => response.json())
 
 
 export default {
@@ -33,6 +36,7 @@ export default {
     findActorsByMovieId,
     findPopularMovies,
     findNowPlayingMovies,
-    findUpcomingMovies
+    findUpcomingMovies,
+    findVideosForMovie
 }
 

@@ -37,8 +37,14 @@ const findAllReviewsForUser = (userId) =>
     fetch(`${BASE_URL}/user/${userId}`)
         .then(res => res.json())
 
+const findAllRecentReviews = () =>
+    fetch(`${BASE_URL}`)
+        .then(res => res.json())
+
+
+
 
 export default {
     createReview, findAllReviewsForMovie,
-    deleteReview, updateReview, findAllReviewsForUser
+    deleteReview, updateReview, findAllReviewsForUser, findAllRecentReviews
 }
