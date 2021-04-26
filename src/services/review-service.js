@@ -1,11 +1,13 @@
 import {useGoogleLogin} from "react-google-login";
 
-const BASE_URL = "http://localhost:4000/api/reviews"
+// const BASE_URL = "http://localhost:4000/api"
+
+const BASE_URL ="https://movie-reviewer-node-server.herokuapp.com/api"
 
 
 
 const createReview = (movieId, review) =>
-    fetch(`${BASE_URL}`,{
+    fetch(`${BASE_URL}/reviews`,{
         method: 'POST',
         body: JSON.stringify(review),
         headers: {
@@ -15,16 +17,16 @@ const createReview = (movieId, review) =>
         .then(res => res.json());
 
 const findAllReviewsForMovie = (movieId) =>
-    fetch(`${BASE_URL}/${movieId}`)
+    fetch(`${BASE_URL}/reviews/${movieId}`)
         .then(res => res.json())
 
 const deleteReview = (reviewId) =>
-    fetch(`${BASE_URL}/${reviewId}`,{
+    fetch(`${BASE_URL}/reviews/${reviewId}`,{
         method: 'DELETE'
     })
         .then(res => res.json())
 const updateReview = (reviewId, review) =>
-    fetch(`${BASE_URL}`,{
+    fetch(`${BASE_URL}/reviews`,{
         method: 'PUT',
         body: JSON.stringify(review),
         headers:{
@@ -34,11 +36,11 @@ const updateReview = (reviewId, review) =>
         .then(res => res.json())
 
 const findAllReviewsForUser = (userId) =>
-    fetch(`${BASE_URL}/user/${userId}`)
+    fetch(`${BASE_URL}/reviews/user/${userId}`)
         .then(res => res.json())
 
 const findAllRecentReviews = () =>
-    fetch(`${BASE_URL}`)
+    fetch(`${BASE_URL}/reviews`)
         .then(res => res.json())
 
 

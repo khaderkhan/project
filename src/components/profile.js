@@ -149,7 +149,7 @@ const Profile = () => {
                 </div>
                 <div className="col-4">
                     <h2>You Follow</h2>
-                    <ul className="list-group">
+                    <ul className="list-group mr-5">
                         {
                             followers.map((fan, index) => {
                                 return (

@@ -1,8 +1,9 @@
 
-const FOLLOWER_URL = "http://localhost:4000/api/fan";
+// const FOLLOWER_URL = "http://localhost:4000/api";
+const FOLLOWER_URL ="https://movie-reviewer-node-server.herokuapp.com/api"
 
 const followFan = (fanId, user) =>
-    fetch(`${FOLLOWER_URL}/${fanId}`,{
+    fetch(`${FOLLOWER_URL}/fan/${fanId}`,{
         method: 'POST',
         body: JSON.stringify(user),
         headers: {
@@ -13,7 +14,7 @@ const followFan = (fanId, user) =>
         .then(response => response.json())
 
 const unFollow = (fanId, user) =>
-    fetch(`${FOLLOWER_URL}/${fanId}`,{
+    fetch(`${FOLLOWER_URL}/fan/${fanId}`,{
         method: 'DELETE',
         body: JSON.stringify(user),
         headers: {
@@ -24,7 +25,7 @@ const unFollow = (fanId, user) =>
 
 
 const findAllFollowers = (userId) =>
-    fetch(`${FOLLOWER_URL}/following/${userId}`)
+    fetch(`${FOLLOWER_URL}/fan/following/${userId}`)
         .then(res => res.json())
 
 export default {
