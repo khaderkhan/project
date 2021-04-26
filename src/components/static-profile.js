@@ -78,10 +78,9 @@ const StaticProfile = () => {
             <br/>
             <br/>
             <div className="row">
-                <div className="col-6 ant-card-contain-tabs">
+                <div className="col-4-sm ant-card-contain-tabs">
                     <h2>Reviews by {user.firstName}</h2>
-                    {
-                        reviews.reviews.map((rev) => {
+                    {reviews.reviews && (reviews.reviews.length > 0) && reviews.reviews.map((rev) => {
                             return (
                                 <div key={rev._id}>
                                     <ReviewItem rev={rev} noicons={true}/>
@@ -90,7 +89,7 @@ const StaticProfile = () => {
                         })
                     }
                 </div>
-                <div className="col-4">
+                <div className="col-sm-4">
                     <h2>{user.firstName} Commented...</h2>
                     {reviews.reviews && (reviews.reviews.length > 0) && reviews.reviews.map(
                         (rev) => {
@@ -105,7 +104,7 @@ const StaticProfile = () => {
                     }
 
                 </div>
-                <div className="col-6">
+                <div className="col-sm-4">
                     <h2>{user.firstName} Follows</h2>
                     <ul className="list-group">
                         {

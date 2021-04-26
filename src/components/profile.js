@@ -120,7 +120,7 @@ const Profile = () => {
             </form>
             <br/>
             <div className="row">
-                <div className="col-4">
+                <div className="col-sm-4">
                     <h2>Your Reviews</h2>
                     {reviews.reviews && (reviews.reviews.length > 0) && reviews.reviews.map(
                         (rev) => {
@@ -132,7 +132,7 @@ const Profile = () => {
                         })
                     }
                 </div>
-                <div className="col-4">
+                <div className="col-sm-4">
                     <h2>You Commented...</h2>
                     {reviews.reviews && (reviews.reviews.length > 0) && reviews.reviews.map(
                         (rev) => {
@@ -147,7 +147,7 @@ const Profile = () => {
                     }
 
                 </div>
-                <div className="col-4">
+                <div className="col-sm-4">
                     <h2>You Follow</h2>
                     <ul className="list-group">
                         {
