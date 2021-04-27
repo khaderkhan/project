@@ -35,19 +35,20 @@ const ReviewItem = (
 
     const loggedInUserName = read_cookie("email")
     const loggedInFirstName = read_cookie("firstName")
+    const type = read_cookie("type")
     console.log("username is:", loggedInUserName)
     const [userFname, setUserFname] = useState('')
     const [userLname, setUserLname] = useState('')
     const [comment, setComment] = useState('')
-    
-    
+    const [commentToggle, setCommentToggle] = useState(true)
+    const [tempComment, setTempComment] = useState('')
 
     useEffect(() => {
 
                  rev.userID && userService.findUserById(rev.userID)
                      .then(user => {setUserFname(user.firstName); setUserLname(user.lastName)})
 
-             }, [])
+             }, [commentToggle, tempComment])
     
     const onFinish = (values) => {
         const commentObj = {
@@ -56,10 +57,15 @@ const ReviewItem = (
             userId: rev.userID,
             movieId: rev.movieId
         }
+        console.log("inside the onfinish thing", values)
         commentService.createComment(commentObj).then( res => {
             setComment(values.comment)
         })
-       
+        console.log("here==>> tempComment", tempComment.length, values.comment)
+        setTempComment(values.comment)
+        console.log("tempComment.length=====>>", tempComment)
+        setCommentToggle(false)
+        
         
         // Invoke the comment service code that will send the comment to the backend. 
         // Save the comment in a state variable. 
@@ -73,7 +79,7 @@ const ReviewItem = (
                 <div className="card shadow p-3 mb-5 bg-white rounded">
                     <div className="card-body">
                         {
-                        loggedInUserName === rev.reviewerId && !noicons &&
+                         ((loggedInUserName === rev.reviewerId && !noicons) || type == "admin") &&
 
                             <>
                             <i className="fas fa-edit float-right mt-1 ml-3" onClick={() => setEditing(true)}
@@ -89,7 +95,7 @@ const ReviewItem = (
                         <Divider />
                         {
                         
-                        rev.comment.length === 0 &&
+                        rev.comment.length === 0 && commentToggle &&
                         <>
                         
                             <Form {...layout} name="nest-messages" onFinish={onFinish} validateMessages={validateMessages}>
@@ -109,7 +115,16 @@ const ReviewItem = (
                             <>
                                 <h4>Comment</h4>
                                 <p>
-                                 {rev.comment[0].comment}
+                                 {tempComment.length == 0? rev.comment[0].comment: tempComment}
+                                </p>
+                            </>
+                        }
+                        {
+                            tempComment.length !== 0 &&
+                            <>
+                                <h4>Comment</h4>
+                                <p>
+                                 {tempComment}
                                 </p>
                             </>
                         }
