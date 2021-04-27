@@ -59,6 +59,14 @@ const Profile = () => {
 
     }, [])
 
+    if (userID.length == 0) {
+        return (
+         <div class="container">
+        <h1>Please log in to view your profile</h1>
+        </div>
+        )
+        }
+        else {
     return (
         <div className="ml-5">
             <h1>My Profile</h1>
@@ -167,6 +175,7 @@ const Profile = () => {
             </div>
         </div>
     )
+    }
 }
 
 export default Profile;
