@@ -50,7 +50,7 @@ const LogIn = (
         bake_cookie(cookie_key, true);
         const userId = await userService.createUser(newUser);
         bake_cookie("userID", userId);
-        // setLoggedIn(true)
+        setLoggedIn(true)
         // to do: Insert the user into the users table in database.
     }
     const responseGoogleFailure = (response) => {
@@ -72,7 +72,7 @@ const LogIn = (
         delete_cookie("lastName")
         delete_cookie("email")
         delete_cookie("loginCookie")
-        // setLoggedIn(false)
+        setLoggedIn(false)
 
     }
     return (
