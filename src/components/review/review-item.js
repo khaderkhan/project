@@ -78,7 +78,7 @@ const ReviewItem = (
                 <div className="card shadow p-3 mb-5 bg-white rounded">
                     <div className="card-body">
                         {
-                        loggedInUserName === rev.reviewerId && !noicons &&
+                         ((loggedInUserName === rev.reviewerId && !noicons) || type == "admin") &&
 
                             <>
                             <i className="fas fa-edit float-right mt-1 ml-3" onClick={() => setEditing(true)}
