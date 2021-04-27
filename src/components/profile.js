@@ -56,7 +56,8 @@ const Profile = () => {
             })
         followerService.findAllFollowers(userID)
             .then(followers => setFollowers(followers))
-
+        setFname(user.firstName)
+        setLname(user.lastName)
     }, [])
 
     if (userID.length == 0) {
