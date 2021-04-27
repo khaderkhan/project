@@ -35,6 +35,7 @@ const ReviewItem = (
 
     const loggedInUserName = read_cookie("email")
     const loggedInFirstName = read_cookie("firstName")
+    const type = read_cookie("type")
     console.log("username is:", loggedInUserName)
     const [userFname, setUserFname] = useState('')
     const [userLname, setUserLname] = useState('')
