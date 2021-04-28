@@ -1,0 +1,292 @@
+Index: src/components/review/review-item.js
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import React, {useState, useEffect} from 'react'\nimport {read_cookie} from \"sfcookies\";\nimport {Link, useParams} from \"react-router-dom\";\nimport userService from '../../services/user-service'\nimport { Form, Input, InputNumber, Button } from 'antd';\nimport commentService from \"../../services/comment-service\"\nimport { Divider } from 'antd';\n\n\nconst layout = {\n    labelCol: {\n      span: 8,\n    },\n    wrapperCol: {\n      span: 16,\n    },\n  };\n  /* eslint-disable no-template-curly-in-string */\n  \n  const validateMessages = {\n    required: '${label} is required!',\n  };\n\n\nconst ReviewItem = (\n    {\n        rev,\n        noicons,\n        deleteReview,\n        updateReview\n    }) => {\n    const [editing, setEditing] = useState(false)\n    const [cachedItem, setCachedItem] = useState(rev)\n\n\n    const loggedInUserName = read_cookie(\"email\")\n    const loggedInFirstName = read_cookie(\"firstName\")\n    console.log(\"username is:\", loggedInUserName)\n    const [userFname, setUserFname] = useState('')\n    const [userLname, setUserLname] = useState('')\n    const [comment, setComment] = useState('')\n    \n    \n\n    useEffect(() => {\n\n                 rev.userID && userService.findUserById(rev.userID)\n                     .then(user => {setUserFname(user.firstName); setUserLname(user.lastName)})\n\n             }, [])\n    \n    const onFinish = (values) => {\n        const commentObj = {\n            reviewId: rev._id,\n            comment: values.comment,\n            userId: rev.userID,\n            movieId: rev.movieId\n        }\n        commentService.createComment(commentObj).then( res => {\n            setComment(values.comment)\n        })\n       \n        \n        // Invoke the comment service code that will send the comment to the backend. \n        // Save the comment in a state variable. \n        // Hide the form and display the comment. \n    };\n\n    return (\n        <>\n            {\n                !editing &&\n                <div className=\"card shadow p-3 mb-5 bg-white rounded\">\n                    <div className=\"card-body\">\n                        {\n                        loggedInUserName === rev.reviewerId && !noicons &&\n\n                            <>\n                            <i className=\"fas fa-edit float-right mt-1 ml-3\" onClick={() => setEditing(true)}\n                               />\n                            <i onClick={() => deleteReview(rev)}\n                            className=\"fas fa-trash float-right mt-1\"/>\n                            </>\n\n\n                        }\n                        <h5 className=\"card-title\">{rev.title}</h5>\n                        <p className=\"card-text\">{rev.review}</p>\n                        <Divider />\n                        {\n                        \n                        rev.comment.length === 0 &&\n                        <>\n                        \n                            <Form {...layout} name=\"nest-messages\" onFinish={onFinish} validateMessages={validateMessages}>\n                                <Form.Item name='comment' label=\"comment\" rules={[{ required: true }]}>\n                                    <Input.TextArea />\n                                </Form.Item>\n                                <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>\n                                    <Button type=\"primary\" htmlType=\"submit\">\n                                    Comment\n                                    </Button>\n                                </Form.Item>\n                            </Form>\n                        </>\n                        }\n                        {\n                            rev.comment.length !== 0 &&\n                            <>\n                                <h4>Comment</h4>\n                                <p>\n                                 {rev.comment[0].comment}\n                                </p>\n                            </>\n                        }\n                    </div>\n                    <div className=\"card-footer\">\n                         <small className=\"text-muted\">\n                         <Link to={`/details/${rev.movieId}`}>\n                         {rev.movieName}\n                          </Link>\n\n                         </small>\n                         <br/>\n                        <small className=\"text-muted\">{new Date(rev.createdAt)\n                            .toLocaleDateString(\n                                'en-US', {\n                                    hour: 'numeric', minute: 'numeric', hour12: true\n                                })}\n                        </small>\n\n\n                        {!rev.userID &&\n                                                <small className=\"text-muted float-right\"> {`By | `}\n                                                <Link to={`/profile`}>\n                                                {rev.reviewer}\n                                                 </Link>\n                                                 </small>\n                                                 }\n\n                        {rev.userID && loggedInUserName === rev.reviewerId &&\n                        !noicons &&\n                        <small className=\"text-muted float-right\">\n                        {`By | `}\n                        <Link to={`/profile`}>\n                        {userFname} {userLname}\n                         </Link>\n\n                         </small>\n                         }\n\n\n\n                         {rev.userID && loggedInUserName !== rev.reviewerId &&\n                         !noicons &&\n                         <small className=\"text-muted float-right\">\n\n                         {`By | `}\n                         <Link\n                          to={`/profile/${rev.userID}`}>\n\n                        {userFname} {userLname}\n                          </Link>\n                          </small>\n                          }\n\n\n\n\n\n\n\n                    </div>\n                </div>\n            }\n            {\n                editing && loggedInUserName === rev.reviewerId &&\n                <>\n                    <label htmlFor=\"reviewTitle\">Title</label>\n                    <input className=\"form-control\"\n                           id=\"reviewTitle\"\n                           onChange={(e) =>\n                               setCachedItem({\n                                                 ...cachedItem,\n                                                 title: e.target.value\n                                             })}\n                           value={cachedItem.title}/>\n                    <label htmlFor=\"reviewBody\">Review</label>\n                    <textarea className=\"form-control\"\n                              id=\"reviewBody\"\n                              onChange={(e) =>\n                                  setCachedItem({\n                                                    ...cachedItem,\n                                                    review: e.target.value\n                                                })}\n                              value={cachedItem.review}/>\n                    <button onClick={() => {\n                        setEditing(false)\n                        updateReview(cachedItem)\n                    }}\n                            className=\"btn btn-primary btn-block\">\n                        Update\n                    </button>\n                </>\n            }\n        </>\n    )\n}\nexport default ReviewItem;
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/components/review/review-item.js b/src/components/review/review-item.js
+--- a/src/components/review/review-item.js	(revision b807014d54658141015d43cb527c10694b7d34d2)
++++ b/src/components/review/review-item.js	(date 1619564699131)
+@@ -35,19 +35,20 @@
+ 
+     const loggedInUserName = read_cookie("email")
+     const loggedInFirstName = read_cookie("firstName")
++    const type = read_cookie("type")
+     console.log("username is:", loggedInUserName)
+     const [userFname, setUserFname] = useState('')
+     const [userLname, setUserLname] = useState('')
+     const [comment, setComment] = useState('')
+-    
+-    
++    const [commentToggle, setCommentToggle] = useState(true)
++    const [tempComment, setTempComment] = useState('')
+ 
+     useEffect(() => {
+ 
+                  rev.userID && userService.findUserById(rev.userID)
+                      .then(user => {setUserFname(user.firstName); setUserLname(user.lastName)})
+ 
+-             }, [])
++             }, [commentToggle, tempComment])
+     
+     const onFinish = (values) => {
+         const commentObj = {
+@@ -56,10 +57,15 @@
+             userId: rev.userID,
+             movieId: rev.movieId
+         }
++        console.log("inside the onfinish thing", values)
+         commentService.createComment(commentObj).then( res => {
+             setComment(values.comment)
+         })
+-       
++        console.log("here==>> tempComment", tempComment.length, values.comment)
++        setTempComment(values.comment)
++        console.log("tempComment.length=====>>", tempComment)
++        setCommentToggle(false)
++        
+         
+         // Invoke the comment service code that will send the comment to the backend. 
+         // Save the comment in a state variable. 
+@@ -73,7 +79,7 @@
+                 <div className="card shadow p-3 mb-5 bg-white rounded">
+                     <div className="card-body">
+                         {
+-                        loggedInUserName === rev.reviewerId && !noicons &&
++                         ((loggedInUserName === rev.reviewerId && !noicons) || type == "admin") &&
+ 
+                             <>
+                             <i className="fas fa-edit float-right mt-1 ml-3" onClick={() => setEditing(true)}
+@@ -89,7 +95,7 @@
+                         <Divider />
+                         {
+                         
+-                        rev.comment.length === 0 &&
++                        rev.comment.length === 0 && commentToggle &&
+                         <>
+                         
+                             <Form {...layout} name="nest-messages" onFinish={onFinish} validateMessages={validateMessages}>
+@@ -109,7 +115,16 @@
+                             <>
+                                 <h4>Comment</h4>
+                                 <p>
+-                                 {rev.comment[0].comment}
++                                 {tempComment.length == 0? rev.comment[0].comment: tempComment}
++                                </p>
++                            </>
++                        }
++                        {
++                            tempComment.length !== 0 &&
++                            <>
++                                <h4>Comment</h4>
++                                <p>
++                                 {tempComment}
+                                 </p>
+                             </>
+                         }
+Index: src/components/google-login.js
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import {GoogleLogin} from 'react-google-login';\nimport {bake_cookie, read_cookie, delete_cookie} from 'sfcookies';\nimport userService from '../services/user-service'\nimport React, {useEffect, useState, useRef} from \"react\";\nimport {connect} from 'react-redux'\nimport {Button, Form, Navbar} from \"react-bootstrap\";\nimport {Link} from \"react-router-dom\";\n\nconst LogIn = (\n    {\n        users = [],\n        createUser,\n        findUserByEmail,\n\n    }\n) => {\n    const cookie_key = 'loginCookie';\n    const [newUser, setNewUser] = useState({})\n    const [isLoggedIn, setLoggedIn] = useState(false);\n    const responseGoogleSuccess = async (response) => {\n        console.log('responseGoogleSuccess')\n        const firstName = response.profileObj.givenName\n        const lastName = response.profileObj.familyName\n        const email = response.profileObj.email\n        const newUser = {\n            firstName,\n            lastName,\n            // email,\n            userName: email,\n            type: 'admin'\n        }\n        console.log(\"from responseGoogleSucces new user is:\", newUser)\n        setNewUser(newUser)\n\n        // userService.createUser(newUser)\n\n        // Note: Since we're using Google login and not relying on the traditional logging system,\n        // we will not have the admin access in the normal way. So, for the regular user, we will\n        // have another column called type in the database. And, in the profile page, we will\n        // provide another button. => If the user requests admin access, then we can grant him the\n        // admin privileges.\n\n        //const cookie_userType =\n        bake_cookie(\"firstName\", firstName);\n        bake_cookie(\"lastName\", lastName);\n        bake_cookie(\"email\", email);\n        // fetch the user type from the backend and store the user type in the cookie. \n        // bake_cookie(\"type\", \"Reviewer\"); // so when the user logs in for the first time, he\n        // would e\n        bake_cookie(cookie_key, true);\n        const userId = await userService.createUser(newUser);\n        bake_cookie(\"userID\", userId);\n        // setLoggedIn(true)\n        // to do: Insert the user into the users table in database.\n    }\n    const responseGoogleFailure = (response) => {\n        delete_cookie(cookie_key);\n    }\n\n    useEffect(() => {\n        console.log('useEffect in google-login')\n        const loggedIn = read_cookie(\"loginCookie\")\n        if (loggedIn === true) {\n            setLoggedIn(loggedIn)\n        }\n\n    }, [isLoggedIn])\n    \n    const deleteCookies = () => {\n        console.log(\"deleteCookies has been called\")\n        delete_cookie(\"firstName\")\n        delete_cookie(\"lastName\")\n        delete_cookie(\"email\")\n        delete_cookie(\"loginCookie\")\n        // setLoggedIn(false)\n\n    }\n    return (\n        <div>\n            {\n                !isLoggedIn &&\n                <GoogleLogin\n                    clientId=\"1039352677511-g79k2dj640dlsr9dehkgaa1j7ujmi4hi.apps.googleusercontent.com\"\n                    buttonText=\"Login\"\n                    onSuccess={responseGoogleSuccess}\n                    onFailure={responseGoogleFailure}\n                    cookiePolicy={'single_host_origin'}\n                />\n            }\n            {\n                isLoggedIn &&\n                <Form inline>\n                    <Link to=\"/profile\">\n                        <Button className=\"mr-2 ml-2\"\n                                variant=\"outline-primary\">\n                            Profile\n                        </Button>\n                    </Link>\n                    <Button className=\"mr-2 ml-2\"\n                            variant=\"outline-primary\" onClick={deleteCookies}>\n                        Sign Out\n                    </Button>\n                </Form>\n            }\n        </div>\n    )\n}\n\nconst stpm = (state) => {\n    return {\n        users: state.userReducer.users\n    }\n}\n\nconst dtpm = (dispatch) => ({\n    createUser: (user) => {\n\n        userService.createUser(user)\n            .then(theUser => dispatch({\n                                          type: \"CREATE_USER\",\n                                          user: theUser\n                                      }))\n\n    },\n    findUserByEmail: (email) => {\n        userService.findUserByEmail(email)\n            .then(theUser => dispatch({\n                                          type: \"FIND_USER_BY_EMAIL\",\n                                          user: theUser\n                                      }))\n    },\n\n})\n\nexport default connect(stpm, dtpm)(LogIn)
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/components/google-login.js b/src/components/google-login.js
+--- a/src/components/google-login.js	(revision b807014d54658141015d43cb527c10694b7d34d2)
++++ b/src/components/google-login.js	(date 1619564699128)
+@@ -50,7 +50,7 @@
+         bake_cookie(cookie_key, true);
+         const userId = await userService.createUser(newUser);
+         bake_cookie("userID", userId);
+-        // setLoggedIn(true)
++        setLoggedIn(true)
+         // to do: Insert the user into the users table in database.
+     }
+     const responseGoogleFailure = (response) => {
+@@ -72,7 +72,7 @@
+         delete_cookie("lastName")
+         delete_cookie("email")
+         delete_cookie("loginCookie")
+-        // setLoggedIn(false)
++        setLoggedIn(false)
+ 
+     }
+     return (
+Index: src/components/static-profile.js
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import React, {useState, useEffect} from \"react\";\nimport reviewService from '../services/review-service'\nimport userService from '../services/user-service'\nimport followerService from '../services/follower-service'\nimport {Link, useParams} from \"react-router-dom\";\nimport ReviewItem from \"./review/review-item\";\nimport {read_cookie} from \"sfcookies\";\n\nconst StaticProfile = () => {\n\n    const [user, setUser] = useState({firstName: \"none\", lastName: \"none\", type: \"none\"})\n    const [reviews, setReviews] = useState(({reviews: []}))\n    const {userID} = useParams()\n\n    const loggedInUserId = read_cookie(\"userID\")\n    const [loggedInUser, setLoggedInUser] = useState(\n        {firstName: \"none\", lastName: \"none\", type: \"none\"})\n    const [followedFans, setFollowedFans] = useState([])\n    const [follow, setFollow] = useState([])\n\n    useEffect(() => {\n        userService.findUserById(userID)\n            .then(user => setUser(user))\n        reviewService.findAllReviewsForUser(userID).then(\n            response => {\n                setReviews(response)\n            })\n\n        userService.findUserById(loggedInUserId)\n            .then(user => setLoggedInUser(user))\n\n        // Here we need to page's userID not the loggedInUserId\n        followerService.findAllFollowers(userID)\n            .then(followedFans => setFollowedFans(followedFans))\n\n        followerService.findAllFollowers(loggedInUserId)\n            .then(follow => setFollow(follow))\n\n    }, [])\n\n    const addFollower = () => {\n        followerService.followFan(userID, loggedInUser)\n            .then(response => console.log('response of create fan is:', response))\n    }\n\n    const unFollow = () => {\n        followerService.unFollow(userID, loggedInUser)\n            .then(res => console.log(res))\n    }\n\n    const isAlreadyFollowed = (fanId) => {\n        const returnValue = follow.find(fan => fan._id === fanId)\n        console.log('returnValue is::::', returnValue !== undefined)\n        return returnValue !== undefined;\n\n    }\n    return (\n\n        <div className=\"ml-5\">\n\n            <h1 className=\"float-left\">{user.firstName} {user.lastName}'s Profile</h1>\n            {\n                isAlreadyFollowed(userID) &&\n                <button className=\"btn btn-danger mr-2 ml-2 mb-2 mt-2 float-right\"\n                        onClick={unFollow}>\n                    Unfollow {user.firstName} -\n                </button>\n            }\n            {\n                !isAlreadyFollowed(userID) &&\n                <button className=\"btn btn-primary mr-2 ml-2 mb-2 mt-2 float-right\"\n                        onClick={addFollower}>\n                    Follow {user.firstName} +\n                </button>\n            }\n            <br/>\n\n            <br/>\n            <br/>\n            <div className=\"row\">\n                <div className=\"col-6 ant-card-contain-tabs\">\n                    <h2>Reviews by {user.firstName}</h2>\n                    {\n                        reviews.reviews.map((rev) => {\n                            return (\n                                <div key={rev._id}>\n                                    <ReviewItem rev={rev} noicons={true}/>\n                                </div>\n                            )\n                        })\n                    }\n                </div>\n                <div className=\"col-6\">\n                    <h2>{user.firstName} Follows</h2>\n                    <ul className=\"list-group\">\n                        {\n                            followedFans.map((fan, index) => {\n                                return (\n                                    <li className=\"list-group-item\" key={index}>\n                                        <Link to={`/profile/${fan._id}`}>\n                                            {fan.firstName} {fan.lastName}\n                                        </Link>\n                                    </li>\n                                )\n                            })\n                        }\n                    </ul>\n                </div>\n\n            </div>\n        </div>\n    )\n}\n\nexport default StaticProfile;
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/components/static-profile.js b/src/components/static-profile.js
+--- a/src/components/static-profile.js	(revision b807014d54658141015d43cb527c10694b7d34d2)
++++ b/src/components/static-profile.js	(date 1619564699138)
+@@ -78,10 +78,9 @@
+             <br/>
+             <br/>
+             <div className="row">
+-                <div className="col-6 ant-card-contain-tabs">
++                <div className="col-sm-4 ant-card-contain-tabs">
+                     <h2>Reviews by {user.firstName}</h2>
+-                    {
+-                        reviews.reviews.map((rev) => {
++                    {reviews.reviews && (reviews.reviews.length > 0) && reviews.reviews.map((rev) => {
+                             return (
+                                 <div key={rev._id}>
+                                     <ReviewItem rev={rev} noicons={true}/>
+@@ -90,7 +89,22 @@
+                         })
+                     }
+                 </div>
+-                <div className="col-6">
++                <div className="col-sm-4">
++                    <h2>{user.firstName} Commented...</h2>
++                    {reviews.reviews && (reviews.reviews.length > 0) && reviews.reviews.map(
++                        (rev) => {
++                            if (rev.comment.length !== 0) {
++                                return (
++                                    <p>
++                                        <i>"{rev.comment[0].comment}"</i> ~ on <b>{rev.title}</b>
++                                    </p>
++                                )
++                            }
++                        })
++                    }
++
++                </div>
++                <div className="col-sm-4">
+                     <h2>{user.firstName} Follows</h2>
+                     <ul className="list-group">
+                         {
+Index: src/components/profile.js
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import React, {useState, useEffect} from \"react\";\nimport {Link} from \"react-router-dom\";\nimport {read_cookie, bake_cookie} from \"sfcookies\";\nimport reviewService from '../services/review-service'\nimport userService from '../services/user-service'\nimport ReviewItem from \"./review/review-item\";\nimport followerService from \"../services/follower-service\";\n\nconst Profile = () => {\n\n    const [user, setUser] = useState({\n                                         firstName: read_cookie(\"firstName\"),\n                                         lastName: read_cookie(\"lastName\"),\n                                         userID: read_cookie(\"userID\"),\n                                         type: read_cookie(\"type\")\n                                     })\n    const [fname, setFname] = useState(read_cookie(\"firstName\"))\n    const [lname, setLname] = useState(read_cookie(\"lastName\"))\n    const [type, setType] = useState(user.type)\n    const [reviews, setReviews] = useState(({reviews: []}))\n    const userID = read_cookie(\"userID\")\n    const [followers, setFollowers] = useState([])\n\n    const updateValues = () => {\n        setUser({firstName: fname, lastName: lname, type: user.type, userID: userID});\n        userService.updateUser(user);\n        bake_cookie(\"firstName\", fname);\n        bake_cookie(\"lastName\", lname);\n        bake_cookie(\"type\", type);\n    }\n    const handleFnameChange = (e) => {\n        setUser({firstName: e.target.value, lastName: lname, type: type, userID: userID});\n        setFname(e.target.value);\n\n    }\n    const handleLnameChange = (e) => {\n        setLname(e.target.value);\n        setUser({firstName: fname, lastName: e.target.value, type: type, userID: userID})\n    }\n    const handleTypeChange = (e) => {\n        if (user.type === \"Reviewer\" && e.target.value === \"admin\") {\n            alert(\"Cannot change from reviewer to admin\");\n        } else {\n            setUser({firstName: fname, lastName: lname, type: e.target.value, userID: userID});\n            setType(e.target.value)\n        }\n    }\n\n    useEffect(() => {\n        const userID = read_cookie(\"userID\")\n        userService.findUserById(userID)\n            .then(user => setUser(user))\n        reviewService.findAllReviewsForUser(userID).then(\n            response => {\n                setReviews(response)\n            })\n        followerService.findAllFollowers(userID)\n            .then(followers => setFollowers(followers))\n\n    }, [])\n\n    return (\n        <div className=\"ml-5\">\n            <h1>My Profile</h1>\n            <form>\n                <div className=\"form-group row\">\n                    <label htmlFor=\"username\" className=\"col-sm-2 col-form-label\">\n                        First Name </label>\n                    <div className=\"col-sm-4\">\n                        <input className=\"form-control wbdv-field wbdv-fname\"\n                               onChange={(e) => handleFnameChange(e)}\n                               id=\"fname\"\n                               value={fname}/>\n                    </div>\n                </div>\n                <div className=\"form-group row\">\n                    <label htmlFor=\"username\" className=\"col-sm-2 col-form-label\">\n                        Last Name </label>\n                    <div className=\"col-sm-4\">\n                        <input className=\"form-control wbdv-field wbdv-lname\"\n                               onChange={(e) => handleLnameChange(e)}\n                               id=\"username\"\n                               value={lname}/>\n                    </div>\n                </div>\n                <div className=\"form-group row\">\n                    <label htmlFor=\"email\" className=\"col-sm-2 col-form-label\">\n                        Email </label>\n                    <div className=\"col-sm-4\">\n                        <input className=\"form-control wbdv-field email\"\n                               type=\"email\"\n                               id=\"email\"\n                               readonly\n                               value={read_cookie(\"email\")}/>\n                    </div>\n                </div>\n                <div className=\"form-group row\">\n                    <label htmlFor=\"type\" className=\"col-sm-2 col-form-label\">\n                        Type </label>\n                    <div className=\"col-sm-4\">\n                        <select className=\"custom-select\" id=\"type\" value={user.type}\n                                onChange={(e) => handleTypeChange(e)}>\n\n                            <option value=\"Producer\">Producer</option>\n                            <option value=\"Reviewer\">Reviewer</option>\n                            <option value=\"admin\">Admin</option>\n                        </select>\n                    </div>\n                </div>\n\n                <div className=\"form-group row\">\n                    <label className=\"col-sm-2 col-form-label\"/>\n                    <div className=\"col-sm-4\">\n                        <input type=\"button\" className=\"btn btn-success btn-block\"\n                               onClick={() => {\n                                   updateValues()\n                               }} value=\"Update\"/>\n                    </div>\n                </div>\n            </form>\n            <br/>\n            <div className=\"row\">\n                <div className=\"col-4\">\n                    <h2>Your Reviews</h2>\n                    {reviews.reviews && (reviews.reviews.length > 0) && reviews.reviews.map(\n                        (rev) => {\n                            return (\n                                <div key={rev._id}>\n                                    <ReviewItem rev={rev} noicons={true}/>\n                                </div>\n                            )\n                        })\n                    }\n                </div>\n                <div className=\"col-4\">\n                    <h2>You Commented...</h2>\n                    {reviews.reviews && (reviews.reviews.length > 0) && reviews.reviews.map(\n                        (rev) => {\n                            if (rev.comment.length !== 0) {\n                                return (\n                                    <p>\n                                        <i>\"{rev.comment[0].comment}\"</i> ~ on <b>{rev.title}</b>\n                                    </p>\n                                )\n                            }\n                        })\n                    }\n\n                </div>\n                <div className=\"col-4\">\n                    <h2>You Follow</h2>\n                    <ul className=\"list-group mr-5\">\n                        {\n                            followers.map((fan, index) => {\n                                return (\n                                    <li className=\"list-group-item\" key={index}>\n                                        <Link to={`/profile/${fan._id}`}>\n                                            {fan.firstName} {fan.lastName}\n                                        </Link>\n                                    </li>\n                                )\n                            })\n                        }\n\n                    </ul>\n                </div>\n            </div>\n        </div>\n    )\n}\n\nexport default Profile;\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/components/profile.js b/src/components/profile.js
+--- a/src/components/profile.js	(revision b807014d54658141015d43cb527c10694b7d34d2)
++++ b/src/components/profile.js	(date 1619564699143)
+@@ -56,9 +56,18 @@
+             })
+         followerService.findAllFollowers(userID)
+             .then(followers => setFollowers(followers))
+-
++        setFname(user.firstName)
++        setLname(user.lastName)
+     }, [])
+ 
++    if (userID.length == 0) {
++        return (
++         <div class="container">
++        <h1>Please log in to view your profile</h1>
++        </div>
++        )
++        }
++        else {
+     return (
+         <div className="ml-5">
+             <h1>My Profile</h1>
+@@ -120,7 +129,7 @@
+             </form>
+             <br/>
+             <div className="row">
+-                <div className="col-4">
++                <div className="col-sm-4">
+                     <h2>Your Reviews</h2>
+                     {reviews.reviews && (reviews.reviews.length > 0) && reviews.reviews.map(
+                         (rev) => {
+@@ -132,7 +141,7 @@
+                         })
+                     }
+                 </div>
+-                <div className="col-4">
++                <div className="col-sm-4">
+                     <h2>You Commented...</h2>
+                     {reviews.reviews && (reviews.reviews.length > 0) && reviews.reviews.map(
+                         (rev) => {
+@@ -147,7 +156,7 @@
+                     }
+ 
+                 </div>
+-                <div className="col-4">
++                <div className="col-sm-4">
+                     <h2>You Follow</h2>
+                     <ul className="list-group mr-5">
+                         {
+@@ -167,6 +176,7 @@
+             </div>
+         </div>
+     )
++    }
+ }
+ 
+ export default Profile;
+Index: src/components/home-page/Home.js
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import React, {useEffect, useState} from 'react'\nimport {Link, useParams} from \"react-router-dom\";\nimport MovieSlide from \"./movie-slide\";\nimport userService from \"../../services/user-service\";\nimport reviewService from \"../../services/review-service\";\nimport ReviewItem from \"../review/review-item\";\nimport ReviewCard from \"./review-card\";\nimport {read_cookie} from \"sfcookies\";\n\nconst Home = () => {\n\n    const [recentReviews, setRecentReviews] = useState([])\n    const [isLoggedIn, setLoggedIn] = useState(false);\n\n\n    useEffect(() => {\n        reviewService.findAllRecentReviews()\n            .then(reviews => setRecentReviews(reviews));\n        if (read_cookie(\"loginCookie\") === true) {\n            setLoggedIn(true)\n        }\n    }, []);\n\n    return (\n        <div>\n            <MovieSlide/>\n            {\n                isLoggedIn &&\n\n                <div className=\"row\">\n                    <div className=\"col-6 mt-5 ml-2 mb-1 mr-3\">\n                        <h3>Most Recent Reviews by Reviewers</h3>\n                        {\n                            recentReviews.map((rev) => {\n                                return (\n                                    <div key={rev._id} className=\"mb-1\">\n                                        <ReviewCard review={rev}/>\n                                    </div>\n                                )\n                            })\n                        }\n                    </div>\n\n                </div>\n            }\n        </div>\n\n    )\n}\n\nexport default Home
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/components/home-page/Home.js b/src/components/home-page/Home.js
+--- a/src/components/home-page/Home.js	(revision b807014d54658141015d43cb527c10694b7d34d2)
++++ b/src/components/home-page/Home.js	(date 1619564699129)
+@@ -10,12 +10,18 @@
+ const Home = () => {
+ 
+     const [recentReviews, setRecentReviews] = useState([])
++    const [reviewsByUser, setReviewsByUser] = useState(({reviewsByUser: []}))
+     const [isLoggedIn, setLoggedIn] = useState(false);
+ 
+ 
+     useEffect(() => {
++        const userID = read_cookie("userID")
+         reviewService.findAllRecentReviews()
+             .then(reviews => setRecentReviews(reviews));
++        reviewService.findAllReviewsForUser(userID).then(
++        response => {
++            setReviewsByUser(response)
++        })
+         if (read_cookie("loginCookie") === true) {
+             setLoggedIn(true)
+         }
+@@ -25,7 +31,7 @@
+         <div>
+             <MovieSlide/>
+             {
+-                isLoggedIn &&
++                !isLoggedIn &&
+ 
+                 <div className="row">
+                     <div className="col-6 mt-5 ml-2 mb-1 mr-3">
+@@ -40,6 +46,26 @@
+                             })
+                         }
+                     </div>
++
++                </div>
++            }
++
++            {
++                isLoggedIn &&
++
++                <div className="row">
++                    <div className="col-6 mt-5 ml-2 mb-1 mr-3">
++                        <h3>Your Most Recent Reviews</h3>
++                        {
++                            reviewsByUser.reviews && reviewsByUser.reviews.map((rev) => {
++                                return (
++                                    <div key={rev._id} className="mb-1">
++                                        <ReviewCard review={rev}/>
++                                    </div>
++                                )
++                            })
++                        }
++                    </div>
+ 
+                 </div>
+             }

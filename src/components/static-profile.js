@@ -118,7 +118,6 @@ const StaticProfile = () => {
                                 )
                             })
                         }
-
                     </ul>
                 </div>
 

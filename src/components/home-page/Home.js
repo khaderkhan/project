@@ -69,6 +69,26 @@ const Home = () => {
 
                 </div>
             }
+
+            {
+                isLoggedIn &&
+
+                <div className="row">
+                    <div className="col-6 mt-5 ml-2 mb-1 mr-3">
+                        <h3>Your Most Recent Reviews</h3>
+                        {
+                            reviewsByUser.reviews && reviewsByUser.reviews.map((rev) => {
+                                return (
+                                    <div key={rev._id} className="mb-1">
+                                        <ReviewCard review={rev}/>
+                                    </div>
+                                )
+                            })
+                        }
+                    </div>
+
+                </div>
+            }
         </div>
 
     )
